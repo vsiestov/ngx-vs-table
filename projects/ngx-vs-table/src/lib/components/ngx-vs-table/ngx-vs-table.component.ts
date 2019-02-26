@@ -35,14 +35,16 @@ export class NgxVsTableComponent implements OnChanges {
     this.rows = [];
     this.activePage = 0;
     this.defaultSettings = {
-      columns: {
-      },
+      columns: {},
       head: {
         sticky: false
       },
       pagination: {
         visible: false,
         perPage: 20
+      },
+      rowClassFunction: () => {
+        return '';
       }
     };
   }
@@ -222,5 +224,9 @@ export class NgxVsTableComponent implements OnChanges {
     }
 
     return index;
+  }
+
+  rowClassName(row): string {
+    return this.settings.rowClassFunction ? this.settings.rowClassFunction(row) : '';
   }
 }

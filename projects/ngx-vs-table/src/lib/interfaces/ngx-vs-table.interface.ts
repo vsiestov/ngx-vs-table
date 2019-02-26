@@ -23,4 +23,5 @@ export interface ITableSettings {
     sticky: boolean;
   };
   pagination?: IPagination;
+  rowClassFunction?: (row: any) => string;
 }

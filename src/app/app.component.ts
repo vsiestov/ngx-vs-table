@@ -55,6 +55,11 @@ export class AppComponent {
     pagination: {
       perPage: 5,
       visible: true
+    },
+    rowClassFunction: (row) => {
+      if (row.source.id === 1) {
+        return 'font-bold';
+      }
     }
   };
 

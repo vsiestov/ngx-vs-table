@@ -4,30 +4,33 @@
       <th
         *ngFor="let cell of heads"
         class="ngx-vs-table__head-cell"
-        [ngClass]="{
-          sortable: cell.sortable,
-          asc: cell.direction === 'asc',
-          desc: cell.direction === 'desc'
-        }"
+        [class.sortable]="cell.sortable"
         [class.sticky]="cell.sticky"
         [class.sticky-column]="cell.stickyColumn"
       >
         <div (click)="onSort(cell)">
           <span>{{ cell.title }}</span>
+          <i
+            *ngIf="cell.sortable"
+            class="fa fa-arrows-alt-v"
+            [class.fa-long-arrow-alt-down]="cell.direction === 'desc'"
+            [class.fa-long-arrow-alt-up]="cell.direction === 'asc'"
+          ></i>
         </div>
       </th>
     </tr>
   </thead>
 
-  <tbody *ngFor="let row of rows; trackBy: identify">
+  <tbody *ngFor="let row of rows; trackBy: identify" [ngClass]="rowClassName(row)">
     <tr>
       <td *ngFor="let cell of row; let i = index" class="ngx-vs-table__body-cell" [class.sticky]="cell.sticky">
         <div
           class="ngx-vs-table__expand-control"
           *ngIf="i === 0 && componentTemplate"
           (click)="onActiveToggle(row)"
-          [class.active]="row.source.isActive"
-        ></div>
+        >
+          <i class="fa" [class.fa-angle-down]="!row.source.isActive" [class.fa-angle-up]="row.source.isActive"></i>
+        </div>
 
         <ngx-vs-table-cell [value]="cell"></ngx-vs-table-cell>
       </td>

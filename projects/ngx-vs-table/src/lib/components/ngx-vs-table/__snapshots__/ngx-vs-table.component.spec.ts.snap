@@ -22,63 +22,72 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
         
         <th
           class="ngx-vs-table__head-cell sortable"
-          ng-reflect-klass="ngx-vs-table__head-cell"
-          ng-reflect-ng-class="[object Object]"
         >
           <div>
             <span>
               ID
             </span>
+            
+            <i
+              class="fa fa-arrows-alt-v"
+            />
           </div>
         </th>
         <th
           class="ngx-vs-table__head-cell sortable"
-          ng-reflect-klass="ngx-vs-table__head-cell"
-          ng-reflect-ng-class="[object Object]"
         >
           <div>
             <span>
               First name
             </span>
+            
+            <i
+              class="fa fa-arrows-alt-v"
+            />
           </div>
         </th>
         <th
           class="ngx-vs-table__head-cell sortable"
-          ng-reflect-klass="ngx-vs-table__head-cell"
-          ng-reflect-ng-class="[object Object]"
         >
           <div>
             <span>
               Last name
             </span>
+            
+            <i
+              class="fa fa-arrows-alt-v"
+            />
           </div>
         </th>
         <th
           class="ngx-vs-table__head-cell sortable"
-          ng-reflect-klass="ngx-vs-table__head-cell"
-          ng-reflect-ng-class="[object Object]"
         >
           <div>
             <span>
               Email
             </span>
+            
+            <i
+              class="fa fa-arrows-alt-v"
+            />
           </div>
         </th>
         <th
           class="ngx-vs-table__head-cell"
-          ng-reflect-klass="ngx-vs-table__head-cell"
-          ng-reflect-ng-class="[object Object]"
         >
           <div>
             <span>
               Action
             </span>
+            
           </div>
         </th>
       </tr>
     </thead>
     
-    <tbody>
+    <tbody
+      ng-reflect-ng-class=""
+    >
       <tr>
         
         <td
@@ -180,7 +189,9 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
       
       
     </tbody>
-    <tbody>
+    <tbody
+      ng-reflect-ng-class=""
+    >
       <tr>
         
         <td
@@ -282,7 +293,9 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
       
       
     </tbody>
-    <tbody>
+    <tbody
+      ng-reflect-ng-class=""
+    >
       <tr>
         
         <td

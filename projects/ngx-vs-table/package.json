@@ -2,6 +2,10 @@
   "name": "ngx-vs-table",
   "version": "0.0.2",
   "author": "Valeriy Siestov",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vsiestov/ngx-vs-table"
+  },
   "peerDependencies": {
     "@angular/common": "^7.2.0",
     "@angular/core": "^7.2.0"

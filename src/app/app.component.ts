@@ -29,6 +29,13 @@ export class AppComponent {
       start: {
         title: 'Start date'
       },
+      list: {
+        title: 'list',
+        sortFunction: (row) => {
+          console.log(row.list[2]);
+          return row.list[2];
+        }
+      },
       actions: {
         title: 'Actions',
         sortable: false,
@@ -62,6 +69,29 @@ export class AppComponent {
     }
   };
 
+  settings2 = {
+    columns: {
+      id: {
+        title: '#'
+      },
+      name: {
+        title: 'Name'
+      },
+      position: {
+        title: 'Position'
+      },
+      office: {
+        title: 'Office'
+      },
+      age: {
+        title: 'Age'
+      },
+      start: {
+        title: 'Start date'
+      }
+    }
+  };
+
   data = [
     {
       id: 1,
@@ -71,6 +101,7 @@ export class AppComponent {
       age: 33,
       start: '2008/11/28',
       salary: '162700',
+      list: ['one', 'two', 'three'],
       isActive: true
     },
     {
@@ -80,6 +111,7 @@ export class AppComponent {
       office: 'London',
       age: 47,
       start: '2009/10/09',
+      list: ['one', 'two', 'three'],
       salary: '162700'
     },
     {
@@ -89,6 +121,7 @@ export class AppComponent {
       office: 'San Francisco',
       age: 66,
       start: '2009/01/12',
+      list: ['two', 'three', 'four'],
       salary: '162700'
     },
     {
@@ -98,6 +131,7 @@ export class AppComponent {
       office: 'London',
       age: 41,
       start: '2012/10/13',
+      list: ['three', 'four', 'five'],
       salary: '162700'
     },
     {
@@ -107,340 +141,7 @@ export class AppComponent {
       office: 'San Francisco\t',
       age: 28,
       start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 1,
-      name: 'Airi Satou',
-      position: 'Accountant',
-      office: 'Tokyo',
-      age: 33,
-      start: '2008/11/28',
-      salary: '162700',
-      isActive: true
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
-      salary: '206850'
-    },
-    {
-      id: 2,
-      name: 'Angelica Ramos',
-      position: 'Chief Executive Officer (CEO)',
-      office: 'London',
-      age: 47,
-      start: '2009/10/09',
-      salary: '162700'
-    },
-    {
-      id: 3,
-      name: 'Ashton Cox',
-      position: 'Junior Technical Author',
-      office: 'San Francisco',
-      age: 66,
-      start: '2009/01/12',
-      salary: '162700'
-    },
-    {
-      id: 4,
-      name: 'Bradley Greer',
-      position: 'Software Engineer',
-      office: 'London',
-      age: 41,
-      start: '2012/10/13',
-      salary: '162700'
-    },
-    {
-      id: 5,
-      name: 'Brenden Wagner',
-      position: 'Software Engineer',
-      office: 'San Francisco\t',
-      age: 28,
-      start: '2011/06/07',
+      list: ['four', 'five', 'six'],
       salary: '206850'
     }
   ];

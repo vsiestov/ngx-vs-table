@@ -21,6 +21,6 @@ import { PageSlicePipe } from './pipes/page-slice.pipe';
     NgxVsTableComponent
   ]
 })
-export class NgxVsModuleModule {
+export class NgxVsTableModule {
 
 }

@@ -21,7 +21,8 @@ export class NgxVsTableComponent implements OnChanges {
   private sortConfig: {
     key: string;
     direction: string;
-    property?: () => void
+    property?: () => void,
+    sortFunction?: () => void
   };
 
   heads: ITableHeadCell[];
@@ -73,6 +74,7 @@ export class NgxVsTableComponent implements OnChanges {
           ? columns[item].sortable
           : true,
         property: columns[item].property,
+        sortFunction: columns[item].sortFunction,
         sticky: stickyHead,
         stickyColumn: columns[item].hasOwnProperty('sticky') ? columns[item].sticky : false
       };
@@ -108,7 +110,7 @@ export class NgxVsTableComponent implements OnChanges {
     const pagination = settings.pagination;
     const offset = this.activePage * pagination.perPage;
     const sortedData = this.sortConfig && this.sortConfig.key
-      ? this.sortByKey(this.sortConfig.key, this.sortConfig.direction, this.sortConfig.property)
+      ? this.sortByKey(this.sortConfig.key, this.sortConfig.direction, this.sortConfig.sortFunction || this.sortConfig.property)
       : data;
 
     const list = pagination.visible
@@ -185,7 +187,8 @@ export class NgxVsTableComponent implements OnChanges {
     this.sortConfig = {
       key: cell.key,
       direction,
-      property: cell.property
+      property: cell.property,
+      sortFunction: cell.sortFunction
     };
 
     this.updateData(this.data);

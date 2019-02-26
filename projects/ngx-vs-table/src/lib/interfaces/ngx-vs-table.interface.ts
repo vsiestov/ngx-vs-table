@@ -4,8 +4,9 @@ export interface ITableHeadCell {
   key: string;
   title: string;
   sortable: boolean;
+  sortFunction: (...args) => any;
   direction?: string;
-  property?: () => void;
+  property?: (...args) => void;
   sticky?: boolean;
   stickyColumn?: boolean;
   component?: ComponentRef<any>;

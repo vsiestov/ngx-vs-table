@@ -1,27 +1,121 @@
 # NgxVsTable
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.3.
+## Installation
 
-## Development server
+You can use npm
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```
+npm i ngx-vs-table
+```
 
-## Code scaffolding
+or yarn
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```
+yarn add ngx-vs-table
+```
 
-## Build
+## How to use
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Before using ngx-vs-table you have to import its module in some of your app module
 
-## Running unit tests
+```
+import { NgxVsTableModule } from 'ngx-vs-table';
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+...
 
-## Running end-to-end tests
+@NgModule({
+    imports: [
+        ...
+        NgxVsTableModule,
+        ...
+    ]
+})
+export class AppModule {
+    ...
+}
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Inside your component class you have to provide settings for your table. A simple configuration can be like this:
 
-## Further help
+```
+settings = {
+    columns: {
+        id: {
+            title: '#'
+        },
+        name: {
+            title: 'Name'
+        },
+        position: {
+            title: 'Position'
+        },
+        office: {
+            title: 'Office'
+        },
+        age: {
+            title: 'Age'
+        },
+        start: {
+            title: 'Start date'
+        }
+    }
+};
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+data = [
+    {
+      id: 1,
+      name: 'Airi Satou',
+      position: 'Accountant',
+      office: 'Tokyo',
+      age: 33,
+      start: '2008/11/28',
+      salary: '162700',
+      isActive: true
+    },
+    {
+      id: 2,
+      name: 'Angelica Ramos',
+      position: 'Chief Executive Officer (CEO)',
+      office: 'London',
+      age: 47,
+      start: '2009/10/09',
+      salary: '162700'
+    },
+    {
+      id: 3,
+      name: 'Ashton Cox',
+      position: 'Junior Technical Author',
+      office: 'San Francisco',
+      age: 66,
+      start: '2009/01/12',
+      salary: '162700'
+    },
+    {
+      id: 4,
+      name: 'Bradley Greer',
+      position: 'Software Engineer',
+      office: 'London',
+      age: 41,
+      start: '2012/10/13',
+      salary: '162700'
+    },
+    {
+      id: 5,
+      name: 'Brenden Wagner',
+      position: 'Software Engineer',
+      office: 'San Francisco\t',
+      age: 28,
+      start: '2011/06/07',
+      salary: '206850'
+    }
+  ];
+```
+
+Inside a component template:
+
+```
+<ngx-vs-table
+  [settings]="settings"
+  [data]="data"
+></ngx-vs-table>
+```

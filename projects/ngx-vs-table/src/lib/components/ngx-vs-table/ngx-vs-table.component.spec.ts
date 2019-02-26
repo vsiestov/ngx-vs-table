@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxVsTableComponent } from './ngx-vs-table.component';
-import { Component, NgModule, NO_ERRORS_SCHEMA, SimpleChange, TemplateRef, ViewChild } from '@angular/core';
+import { Component, NgModule, NO_ERRORS_SCHEMA, SimpleChange } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxVsTableCellComponent } from '../ngx-vs-table-cell/ngx-vs-table-cell.component';
 import { NgxVsCustomCellComponent } from '../ngx-vs-custom-cell/ngx-vs-custom-cell.component';
@@ -61,6 +61,41 @@ describe('NgxVsTableComponent', () => {
       lastName: {
         title: 'Last name',
         property: (row) => {
+          return row.lastName.two.three.value;
+        }
+      },
+      email: {
+        title: 'Email'
+      }
+    }
+  };
+
+  const complexSettingsWithSortFunc = {
+    columns: {
+      id: {
+        title: 'ID',
+        property: (row) => {
+          return row.id.one.value;
+        },
+        sort: (row) => {
+          return row.id.one.value;
+        }
+      },
+      firstName: {
+        title: 'First name',
+        property: (row) => {
+          return row.firstName.value;
+        },
+        sort: (row) => {
+          return row.firstName.value;
+        }
+      },
+      lastName: {
+        title: 'Last name',
+        property: (row) => {
+          return row.lastName.two.three.value;
+        },
+        sort: (row) => {
           return row.lastName.two.three.value;
         }
       },
@@ -296,6 +331,42 @@ describe('NgxVsTableComponent', () => {
         value: 1
       });
       expect(component.rows[1][0].value).toEqual(0);
+    });
+
+    it('should sort columns with a specific function', () => {
+      component.settings = complexSettingsWithSortFunc;
+      component.data = complexData;
+
+      component.ngOnChanges({
+        settings: new SimpleChange(null, complexSettingsWithSortFunc, true),
+        data: new SimpleChange(null, complexData, true)
+      });
+
+      fixture.detectChanges();
+
+      const table = fixture.nativeElement as HTMLTableElement;
+
+      spyOn(component, 'onSort').and.callThrough();
+
+      table.querySelector('th > div').dispatchEvent(new Event('click'));
+
+      expect(component.onSort).toHaveBeenCalled();
+
+      expect(component.rows[0][0].value).toEqual(0);
+      expect(component.rows[1][0].value).toEqual(1);
+
+      fixture.detectChanges();
+
+      table.querySelector('th > div').dispatchEvent(new Event('click'));
+
+      expect(component.onSort).toHaveBeenCalled();
+
+      fixture.detectChanges();
+
+      expect(component.rows[0][0]).toEqual({
+        value: 2
+      });
+      expect(component.rows[1][0].value).toEqual(1);
     });
 
     it('should be rendered with complex data', () => {

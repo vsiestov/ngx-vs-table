@@ -1,0 +1,9 @@
+{
+  "name": "ngx-vs-table",
+  "version": "0.0.2",
+  "author": "Valeriy Siestov",
+  "peerDependencies": {
+    "@angular/common": "^7.2.0",
+    "@angular/core": "^7.2.0"
+  }
+}

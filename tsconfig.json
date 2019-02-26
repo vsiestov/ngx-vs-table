@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngx-vs-table": [
+        "dist/ngx-vs-table"
+      ],
+      "ngx-vs-table/*": [
+        "dist/ngx-vs-table/*"
+      ]
+    }
   }
 }

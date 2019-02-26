@@ -1,0 +1,81 @@
+$color: #fff;
+$color-text: #177B57;
+
+$active-color: #177B57;
+$active-color-text: #fff;
+
+$hover-color: #F5F5F5;
+
+%middle {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+%align-middle {
+    &:after {
+        @extend %middle;
+        content: '';
+        height: 100%;
+    }
+}
+
+.ngx-vs-pagination {
+    height: 34px;
+}
+
+.ngx-vs-pagination__item {
+    @extend %middle;
+    width: 34px;
+    height: 100%;
+
+    &:first-child {
+        .ngx-vs-pagination__button {
+            border-radius: 3px 0 0 3px;
+        }
+    }
+
+    &:last-child {
+        .ngx-vs-pagination__button {
+            border-radius: 0 3px 3px 0;
+            border: 1px solid #ddd;
+        }
+    }
+
+    &.active {
+        .ngx-vs-pagination__button {
+            background-color: $active-color;
+            border: $active-color;
+
+            span {
+                color: $active-color-text;
+            }
+        }
+    }
+}
+
+.ngx-vs-pagination__button {
+    @extend %align-middle;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: $color-text;
+    background-color: $color;
+    border: 1px solid #ddd;
+    border-right: none;
+    cursor: pointer;
+
+    &:hover {
+        background-color: $hover-color;
+    }
+
+    &:disabled {
+        color: #ddd;
+        background-color: $color;
+        cursor: default;
+    }
+
+    i,
+    span {
+        @extend %middle;
+    }
+}

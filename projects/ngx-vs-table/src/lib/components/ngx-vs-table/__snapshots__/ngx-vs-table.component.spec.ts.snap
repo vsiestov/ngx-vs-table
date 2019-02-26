@@ -1,0 +1,391 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NgxVsTableComponent Custom table cells should be rendered with a component cell 1`] = `
+<ngx-vs-table
+  activePage="0"
+  className=""
+  defaultSettings={[Function Object]}
+  heads={[Function Array]}
+  keys={[Function Array]}
+  onSort={[Function Function]}
+  pageChanged={[Function EventEmitter]}
+  rows={[Function Array]}
+  settings={[Function Object]}
+>
+  <table
+    class="ngx-vs-table"
+    ng-reflect-klass="ngx-vs-table"
+    ng-reflect-ng-class=""
+  >
+    <thead>
+      <tr>
+        
+        <th
+          class="ngx-vs-table__head-cell sortable"
+          ng-reflect-klass="ngx-vs-table__head-cell"
+          ng-reflect-ng-class="[object Object]"
+        >
+          <div>
+            <span>
+              ID
+            </span>
+          </div>
+        </th>
+        <th
+          class="ngx-vs-table__head-cell sortable"
+          ng-reflect-klass="ngx-vs-table__head-cell"
+          ng-reflect-ng-class="[object Object]"
+        >
+          <div>
+            <span>
+              First name
+            </span>
+          </div>
+        </th>
+        <th
+          class="ngx-vs-table__head-cell sortable"
+          ng-reflect-klass="ngx-vs-table__head-cell"
+          ng-reflect-ng-class="[object Object]"
+        >
+          <div>
+            <span>
+              Last name
+            </span>
+          </div>
+        </th>
+        <th
+          class="ngx-vs-table__head-cell sortable"
+          ng-reflect-klass="ngx-vs-table__head-cell"
+          ng-reflect-ng-class="[object Object]"
+        >
+          <div>
+            <span>
+              Email
+            </span>
+          </div>
+        </th>
+        <th
+          class="ngx-vs-table__head-cell"
+          ng-reflect-klass="ngx-vs-table__head-cell"
+          ng-reflect-ng-class="[object Object]"
+        >
+          <div>
+            <span>
+              Action
+            </span>
+          </div>
+        </th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <tr>
+        
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             0
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             Valeriy
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             Siestov
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             vsi@container-xchange.com
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+            
+            <ngx-vs-custom-cell
+              ng-reflect-component="function CustomTableComponent("
+              ng-reflect-init="function (instance) {
+          "
+              ng-reflect-value="[object Object]"
+            >
+              
+              <custom-table-component>
+                <div
+                  class="test-input"
+                >
+                   custom input 
+                </div>
+                <div>
+                  <span>
+                    Valeriy
+                  </span>
+                  <button>
+                    Edit
+                  </button>
+                </div>
+                <div>
+                  <span>
+                    vsi@container-xchange.com
+                  </span>
+                  <button>
+                    Send message
+                  </button>
+                </div>
+              </custom-table-component>
+            </ngx-vs-custom-cell>
+            
+          </ngx-vs-table-cell>
+        </td>
+      </tr>
+      
+      
+    </tbody>
+    <tbody>
+      <tr>
+        
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             1
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             Somebody
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             Else
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             ses@container-xchange.com
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+            
+            <ngx-vs-custom-cell
+              ng-reflect-component="function CustomTableComponent("
+              ng-reflect-init="function (instance) {
+          "
+              ng-reflect-value="[object Object]"
+            >
+              
+              <custom-table-component>
+                <div
+                  class="test-input"
+                >
+                   custom input 
+                </div>
+                <div>
+                  <span>
+                    Somebody
+                  </span>
+                  <button>
+                    Edit
+                  </button>
+                </div>
+                <div>
+                  <span>
+                    ses@container-xchange.com
+                  </span>
+                  <button>
+                    Send message
+                  </button>
+                </div>
+              </custom-table-component>
+            </ngx-vs-custom-cell>
+            
+          </ngx-vs-table-cell>
+        </td>
+      </tr>
+      
+      
+    </tbody>
+    <tbody>
+      <tr>
+        
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             2
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             Third
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             Forth
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+             ses@container-xchange.com
+  
+            
+          </ngx-vs-table-cell>
+        </td>
+        <td
+          class="ngx-vs-table__body-cell"
+        >
+          
+          <ngx-vs-table-cell
+            ng-reflect-value="[object Object]"
+          >
+            
+            
+            <ngx-vs-custom-cell
+              ng-reflect-component="function CustomTableComponent("
+              ng-reflect-init="function (instance) {
+          "
+              ng-reflect-value="[object Object]"
+            >
+              
+              <custom-table-component>
+                <div
+                  class="test-input"
+                >
+                   custom input 
+                </div>
+                <div>
+                  <span>
+                    Third
+                  </span>
+                  <button>
+                    Edit
+                  </button>
+                </div>
+                <div>
+                  <span>
+                    ses@container-xchange.com
+                  </span>
+                  <button>
+                    Send message
+                  </button>
+                </div>
+              </custom-table-component>
+            </ngx-vs-custom-cell>
+            
+          </ngx-vs-table-cell>
+        </td>
+      </tr>
+      
+      
+    </tbody>
+  </table><ngx-vs-pagination>
+    
+  </ngx-vs-pagination>
+</ngx-vs-table>
+`;

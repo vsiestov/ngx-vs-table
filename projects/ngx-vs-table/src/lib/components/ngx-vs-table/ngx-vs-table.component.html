@@ -1,0 +1,54 @@
+<table class="ngx-vs-table" [ngClass]="className">
+  <thead>
+    <tr>
+      <th
+        *ngFor="let cell of heads"
+        class="ngx-vs-table__head-cell"
+        [ngClass]="{
+          sortable: cell.sortable,
+          asc: cell.direction === 'asc',
+          desc: cell.direction === 'desc'
+        }"
+        [class.sticky]="cell.sticky"
+        [class.sticky-column]="cell.stickyColumn"
+      >
+        <div (click)="onSort(cell)">
+          <span>{{ cell.title }}</span>
+        </div>
+      </th>
+    </tr>
+  </thead>
+
+  <tbody *ngFor="let row of rows; trackBy: identify">
+    <tr>
+      <td *ngFor="let cell of row; let i = index" class="ngx-vs-table__body-cell" [class.sticky]="cell.sticky">
+        <div
+          class="ngx-vs-table__expand-control"
+          *ngIf="i === 0 && componentTemplate"
+          (click)="onActiveToggle(row)"
+          [class.active]="row.source.isActive"
+        ></div>
+
+        <ngx-vs-table-cell [value]="cell"></ngx-vs-table-cell>
+      </td>
+    </tr>
+
+    <ng-container [ngTemplateOutlet]="additionalRows" [ngTemplateOutletContext]="{ row: row.source }">
+    </ng-container>
+
+    <ng-container *ngIf="componentTemplate && row.source.isActive">
+      <tr>
+        <td [attr.colspan]="row.length" class="ngx-vs-table__outlet-cell">
+          <div class="ngx-vs-table__outlet">
+            <ng-container
+              [ngTemplateOutlet]="componentTemplate"
+              [ngTemplateOutletContext]="{ row: row.source }"
+            ></ng-container>
+          </div>
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
+
+<ngx-vs-pagination [settings]="settings?.pagination" [count]="data?.length" (changed)="onPageChange($event)"></ngx-vs-pagination>

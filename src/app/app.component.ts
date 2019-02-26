@@ -34,9 +34,8 @@ export class AppComponent {
         sortable: false,
         component: CustomCellComponent,
         componentOnInit: (instance: CustomCellComponent) => {
-          instance.action = (row, value) => {
-            console.log(row, value);
 
+          instance.action = (row, value) => {
             const index = findIndex(this.data, {
               id: row.id
             });

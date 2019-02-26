@@ -42,7 +42,7 @@ export class NgxVsCustomCellComponent implements OnInit, OnDestroy {
     this.componentRef.instance.value = this.value;
 
     if (this.init) {
-      this.init(this.componentRef.instance);
+      this.init(this.componentRef.instance, this.value);
     }
   }
 

@@ -1,31 +1,21 @@
-<ngx-vs-table
-  [settings]="settings"
-  [data]="data"
-  [componentTemplate]="template"
-  [additionalRows]="rowsTemplate"
-></ngx-vs-table>
+<nav>
+  <ul>
+    <li>
+      <a [routerLink]="['/']">Simple table with sticky head</a>
+    </li>
 
-<ng-template #template let-row="row">
-  <strong>Salary</strong>
-  <span>{{ row.salary | currency: '$' }}</span>
-</ng-template>
+    <li>
+      <a [routerLink]="['/nested-properties-and-custom-cells']">Nested properties and custom cells</a>
+    </li>
 
-<ng-template #rowsTemplate let-row="row">
-  <tr>
-    <td colspan="7" class="ngx-vs-table__body-cell">
-      this is an additional row for {{ row.name }} in {{ row.office }}
-    </td>
-  </tr>
+    <li>
+      <a [routerLink]="['/expandable']">Expandable rows with custom rows</a>
+    </li>
 
-  <tr>
-    <td colspan="7" class="ngx-vs-table__body-cell">
-      and this one too
-    </td>
-  </tr>
-</ng-template>
+    <li>
+      <a [routerLink]="['/recursive']">Recursive</a>
+    </li>
+  </ul>
+</nav>
 
-
-<ngx-vs-table
-  [settings]="settings2"
-  [data]="data"
-></ngx-vs-table>
+<router-outlet></router-outlet>

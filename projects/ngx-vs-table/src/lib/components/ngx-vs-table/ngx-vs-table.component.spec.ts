@@ -442,7 +442,7 @@ describe('NgxVsTableComponent', () => {
 
   describe('Custom table cells', () => {
     @Component({
-      selector: 'custom-table-component',
+      selector: 'ngx-vs-custom-table-component',
       template: `
         <div class="test-input">
           {{ prefix }}
@@ -540,7 +540,7 @@ describe('NgxVsTableComponent', () => {
       fixture.detectChanges();
 
       const table = fixture.nativeElement as HTMLTableElement;
-      const customComponents = table.querySelectorAll('custom-table-component');
+      const customComponents = table.querySelectorAll('ngx-vs-custom-table-component');
 
       expect(customComponents.length).toEqual(3);
       expect(customComponents[0].querySelector('span').textContent).toContain('Valeriy');

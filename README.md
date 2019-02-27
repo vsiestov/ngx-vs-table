@@ -1,5 +1,7 @@
 # NgxVsTable
 
+Demo: https://ngx-vs-table.firebaseapp.com/
+
 ## Installation
 
 You can use npm
@@ -41,13 +43,18 @@ Inside your component class you have to provide settings for your table. A simpl
 settings = {
     columns: {
         id: {
-            title: '#'
+            title: '#',
+            sticky: true
         },
         name: {
-            title: 'Name'
+            title: 'Name',
+            sortable: false
         },
         position: {
-            title: 'Position'
+            title: 'Position',
+            sortFunction: (row) => {
+                return row.position[0];
+            }
         },
         office: {
             title: 'Office'
@@ -57,7 +64,35 @@ settings = {
         },
         start: {
             title: 'Start date'
+        },
+        example: {
+            title: 'Nested property',
+            property: (row) => {
+                return row.example.name
+            }
+        },
+        actions: {
+            title: 'Table actions',
+            component: CustomCellComponent,
+            componentOnInit: (componentInstance: CustomCellComponent, row: any) => {
+                componentInstance.settings = {...}; // Set custom properties when component is created
+            }
         }
+    },
+    trackBy: 'id',
+    head: {
+        sticky: true
+    },
+    pagination: {
+        visible: true,
+        perPage: 20
+    },
+    rowClassFunction: (row) => {
+        if (row.isActive) {
+            return 'active';
+        }
+        
+        return '';
     }
 };
 
@@ -70,7 +105,10 @@ data = [
       age: 33,
       start: '2008/11/28',
       salary: '162700',
-      isActive: true
+      isActive: true,
+      example: {
+        name: 'Nested property example'
+      }
     },
     {
       id: 2,

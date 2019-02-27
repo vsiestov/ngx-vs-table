@@ -1,5 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "./../../tsconfig.json",
   "compilerOptions": {
     "outDir": "../../out-tsc/lib",
     "target": "es2015",
@@ -11,7 +11,9 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "types": [],
+    "types": [
+      "node_modules/@types"
+    ],
     "lib": [
       "dom",
       "es2018"

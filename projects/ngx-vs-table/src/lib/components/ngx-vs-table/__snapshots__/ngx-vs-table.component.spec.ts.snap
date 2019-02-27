@@ -158,7 +158,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
               ng-reflect-value="[object Object]"
             >
               
-              <custom-table-component>
+              <ngx-vs-custom-table-component>
                 <div
                   class="test-input"
                 >
@@ -180,7 +180,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
                     Send message
                   </button>
                 </div>
-              </custom-table-component>
+              </ngx-vs-custom-table-component>
             </ngx-vs-custom-cell>
             
           </ngx-vs-table-cell>
@@ -262,7 +262,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
               ng-reflect-value="[object Object]"
             >
               
-              <custom-table-component>
+              <ngx-vs-custom-table-component>
                 <div
                   class="test-input"
                 >
@@ -284,7 +284,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
                     Send message
                   </button>
                 </div>
-              </custom-table-component>
+              </ngx-vs-custom-table-component>
             </ngx-vs-custom-cell>
             
           </ngx-vs-table-cell>
@@ -366,7 +366,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
               ng-reflect-value="[object Object]"
             >
               
-              <custom-table-component>
+              <ngx-vs-custom-table-component>
                 <div
                   class="test-input"
                 >
@@ -388,7 +388,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
                     Send message
                   </button>
                 </div>
-              </custom-table-component>
+              </ngx-vs-custom-table-component>
             </ngx-vs-custom-cell>
             
           </ngx-vs-table-cell>

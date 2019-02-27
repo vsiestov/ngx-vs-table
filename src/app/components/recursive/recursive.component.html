@@ -1,0 +1,10 @@
+<ngx-vs-table
+  [settings]="settings"
+  [data]="data"
+  [componentTemplate]="template"
+></ngx-vs-table>
+
+<ng-template #template let-row="row">
+  <ngx-vs-table [data]="row.topping" [settings]="toppingSettings"
+  ></ngx-vs-table>
+</ng-template>

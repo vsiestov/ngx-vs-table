@@ -8,6 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class CustomCellComponent implements OnInit {
   @Input() value;
   @Input() action: (value, result) => void;
+  @Input() phone: string;
 
   constructor(
   ) { }
@@ -16,11 +17,11 @@ export class CustomCellComponent implements OnInit {
   }
 
   onPreview() {
-    alert(this.value.name);
+    alert(`Call to ${this.phone}`);
   }
 
   onEdit() {
-    const result = prompt(this.value.name);
+    const result = prompt('Your first name', this.value.users.first_name);
 
     if (this.action && typeof this.action === 'function') {
       this.action(this.value, result);

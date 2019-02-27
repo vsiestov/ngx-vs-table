@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { CustomCellComponent } from './components/custom-cell/custom-cell.component';
-import { NgxVsTableModule } from '../../projects/ngx-vs-table/src/lib/ngx-vs-table.module';
+import { NgxVsTableModule } from '../../dist/ngx-vs-table';
 import { MainComponent } from './components/main/main.component';
 import { AppRouterModule } from './app-router.module';
 import { NestedComponent } from './components/nested/nested.component';

@@ -1,6 +1,6 @@
 {
   "name": "ngx-vs-table",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "Valeriy Siestov",
   "repository": {
     "type": "git",
@@ -11,7 +11,9 @@
     "@angular/core": "^7.2.0"
   },
   "dependencies": {
-    "@types/jest": "^24.0.9",
     "lodash-es": "^4.17.11"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.9"
   }
 }

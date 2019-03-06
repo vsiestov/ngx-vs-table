@@ -239,6 +239,10 @@ export class NgxVsTableComponent implements OnChanges {
             continue;
           }
 
+          if (property.filterFunction && typeof property.filterFunction === 'function') {
+            return property.filterFunction(o.source, property.value);
+          }
+
           switch (property.type) {
             case 'number':
             case 'checkbox':
@@ -350,7 +354,8 @@ export class NgxVsTableComponent implements OnChanges {
             [filter.key]: {
               index,
               type: filter.type,
-              value: result
+              value: result,
+              filterFunction: filter.filterFunction
             }
           };
         } else {
@@ -366,7 +371,8 @@ export class NgxVsTableComponent implements OnChanges {
             [filter.key]: {
               index,
               type: filter.type,
-              value
+              value,
+              filterFunction: filter.filterFunction
             }
           };
         } else {
@@ -382,7 +388,8 @@ export class NgxVsTableComponent implements OnChanges {
             [filter.key]: {
               index,
               type: filter.type,
-              value
+              value,
+              filterFunction: filter.filterFunction
             }
           };
         } else {
@@ -399,7 +406,8 @@ export class NgxVsTableComponent implements OnChanges {
             [filter.key]: {
               index,
               type: filter.type,
-              value: result
+              value: result,
+              filterFunction: filter.filterFunction
             }
           };
         } else {

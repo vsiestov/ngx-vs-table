@@ -26,6 +26,7 @@ export interface IFilterSettings {
   type: string;
   list?: ITitleValue[];
   placeholder?: string;
+  filterFunction?: (row: any, value: string) => any;
 }
 
 export interface IColumns {

@@ -605,7 +605,10 @@ export const settings: ITableSettings = {
         return new Date(row.start_date);
       },
       filter: {
-        type: 'datetime-local'
+        type: 'text',
+        filterFunction: (row, value) => {
+          return row.start_date.indexOf(value.toLowerCase()) !== -1;
+        }
       }
     },
     office: {

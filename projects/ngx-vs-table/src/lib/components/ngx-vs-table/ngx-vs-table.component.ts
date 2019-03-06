@@ -196,7 +196,7 @@ export class NgxVsTableComponent implements OnChanges {
     } else {
         const list = this.sliceData(pagination, offset, sortedData);
 
-        this.itemsCount = list.length;
+        this.itemsCount = sortedData.length;
         this.rows = this.transformData(columns, keys, list);
     }
 

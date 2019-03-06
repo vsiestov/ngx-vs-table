@@ -240,25 +240,25 @@ export class NgxVsTableComponent implements OnChanges {
           }
 
           if (property.filterFunction && typeof property.filterFunction === 'function') {
-            return property.filterFunction(o.source, property.value);
-          }
-
-          switch (property.type) {
-            case 'number':
-            case 'checkbox':
-              result = cell === property.value;
-              break;
-
-            case 'select':
-              if (property.value !== '-1') {
+            result = property.filterFunction(o.source, property.value);
+          } else {
+            switch (property.type) {
+              case 'number':
+              case 'checkbox':
                 result = cell === property.value;
-              }
-              break;
+                break;
 
-            default:
-              result = (typeof cell === 'string' ? cell : cell.toString())
-                .toLowerCase()
-                .indexOf(property.value.toLowerCase()) !== -1;
+              case 'select':
+                if (property.value !== '-1') {
+                  result = cell === property.value;
+                }
+                break;
+
+              default:
+                result = (typeof cell === 'string' ? cell : cell.toString())
+                  .toLowerCase()
+                  .indexOf(property.value.toLowerCase()) !== -1;
+            }
           }
 
           if (!result) {

@@ -22,7 +22,6 @@ export class NgxVsTableComponent implements OnChanges {
 
   private activePage: number;
   private defaultSettings: ITableSettings;
-  private hasFilter: boolean;
   private sortConfig: {
     key: string;
     direction: string;
@@ -30,6 +29,7 @@ export class NgxVsTableComponent implements OnChanges {
     sortFunction?: () => void
   };
 
+  hasFilter: boolean;
   heads: ITableHeadCell[];
   filters: ITableFilter[];
   rows: any[][];

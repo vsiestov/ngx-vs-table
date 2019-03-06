@@ -19,16 +19,51 @@
         </div>
       </th>
     </tr>
+
+    <tr *ngIf="hasFilter">
+      <th *ngFor="let filter of filters; let i = index" class="ngx-vs-table__head-cell">
+        <ng-container *ngIf="filter">
+          <ng-container [ngSwitch]="filter.type">
+            <div *ngSwitchCase="'checkbox'" class="ngx-vs-table__cell-filter">
+              <input type="checkbox" (change)="onChangeBoxChange(filter, i, $event)" />
+            </div>
+
+            <div *ngSwitchCase="'select'" class="ngx-vs-table__cell-filter">
+              <select (change)="onUpdateFilter(filter, i, $event.target.value)">
+                <option value="-1">{{ filter.placeholder }}</option>
+                <option
+                  *ngFor="let item of filter.list"
+                  [value]="item.value"
+                  >{{ item.title }}</option
+                >
+              </select>
+            </div>
+
+            <div *ngSwitchCase="'number'" class="ngx-vs-table__cell-filter">
+              <input
+                type="number"
+                [placeholder]="filter.placeholder"
+                (input)="onUpdateFilter(filter, i, $event.target.value)"
+              />
+            </div>
+
+            <div *ngSwitchDefault class="ngx-vs-table__cell-filter">
+              <input
+                type="text"
+                [placeholder]="filter.placeholder"
+                (input)="onUpdateFilter(filter, i, $event.target.value)"
+              />
+            </div>
+          </ng-container>
+        </ng-container>
+      </th>
+    </tr>
   </thead>
 
   <tbody *ngFor="let row of rows; trackBy: identify" [ngClass]="rowClassName(row)">
     <tr>
       <td *ngFor="let cell of row; let i = index" class="ngx-vs-table__body-cell" [class.sticky]="cell.sticky">
-        <div
-          class="ngx-vs-table__expand-control"
-          *ngIf="i === 0 && componentTemplate"
-          (click)="onActiveToggle(row)"
-        >
+        <div class="ngx-vs-table__expand-control" *ngIf="i === 0 && componentTemplate" (click)="onActiveToggle(row)">
           <i class="fa" [class.fa-angle-down]="!row.source.isActive" [class.fa-angle-up]="row.source.isActive"></i>
         </div>
 
@@ -36,8 +71,7 @@
       </td>
     </tr>
 
-    <ng-container [ngTemplateOutlet]="additionalRows" [ngTemplateOutletContext]="{ row: row.source }">
-    </ng-container>
+    <ng-container [ngTemplateOutlet]="additionalRows" [ngTemplateOutletContext]="{ row: row.source }"> </ng-container>
 
     <ng-container *ngIf="componentTemplate && row.source.isActive">
       <tr>
@@ -54,4 +88,8 @@
   </tbody>
 </table>
 
-<ngx-vs-pagination [settings]="settings?.pagination" [count]="data?.length" (changed)="onPageChange($event)"></ngx-vs-pagination>
+<ngx-vs-pagination
+  [settings]="settings?.pagination"
+  [count]="itemsCount"
+  (changed)="onPageChange($event)"
+></ngx-vs-pagination>

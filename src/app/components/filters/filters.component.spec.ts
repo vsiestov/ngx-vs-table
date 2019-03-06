@@ -1,22 +1,22 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NestedComponent } from './nested.component';
+import { FiltersComponent } from './filters.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('NestedComponent', () => {
-  let component: NestedComponent;
-  let fixture: ComponentFixture<NestedComponent>;
+describe('FiltersComponent', () => {
+  let component: FiltersComponent;
+  let fixture: ComponentFixture<FiltersComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NestedComponent ],
+      declarations: [ FiltersComponent ],
       schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NestedComponent);
+    fixture = TestBed.createComponent(FiltersComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

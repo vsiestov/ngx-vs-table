@@ -7,12 +7,13 @@ import { NgxVsTableCellComponent } from '../ngx-vs-table-cell/ngx-vs-table-cell.
 import { NgxVsCustomCellComponent } from '../ngx-vs-custom-cell/ngx-vs-custom-cell.component';
 import { NgxVsPaginationComponent } from '../ngx-vs-pagination/ngx-vs-pagination.component';
 import { PageSlicePipe } from '../../pipes/page-slice.pipe';
+import { ITableSettings } from '../../interfaces/ngx-vs-table.interface';
 
 describe('NgxVsTableComponent', () => {
   let component: NgxVsTableComponent;
   let fixture: ComponentFixture<NgxVsTableComponent>;
 
-  const simpleSettings = {
+  const simpleSettings: ITableSettings = {
     columns: {
       id: {
         title: 'ID'
@@ -438,6 +439,217 @@ describe('NgxVsTableComponent', () => {
       expect(component.rows[0][0].value).toEqual(2);
       expect(component.rows[1][0].value).toEqual(1);
     });
+  });
+
+  describe('Table with filters', () => {
+    beforeEach(async(() => {
+      TestBed.configureTestingModule({
+        declarations: [
+          NgxVsTableComponent,
+          NgxVsTableCellComponent,
+          NgxVsCustomCellComponent,
+          PageSlicePipe
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
+      })
+        .compileComponents();
+    }));
+
+    beforeEach(() => {
+      fixture = TestBed.createComponent(NgxVsTableComponent);
+      component = fixture.componentInstance;
+    });
+
+    const filterSettings: ITableSettings = {
+      columns: {
+        id: {
+          title: 'ID',
+          filter: {
+            type: 'number'
+          }
+        },
+        firstName: {
+          title: 'First name',
+          filter: true
+        },
+        lastName: {
+          title: 'Last name',
+          filter: true
+        },
+        status: {
+          title: 'Status',
+          filter: {
+            type: 'select',
+            list: [
+              {
+                value: 'active',
+                title: 'Active'
+              },
+              {
+                value: 'inactive',
+                title: 'Inactive'
+              }
+            ]
+          }
+        },
+        visible: {
+          title: 'Visible',
+          filter: {
+            type: 'checkbox'
+          }
+        }
+      }
+    };
+
+    const filterData = [
+      {
+        id: 0,
+        firstName: 'Valeriy',
+        lastName: 'Siestov',
+        status: 'active',
+        visible: false
+      },
+      {
+        id: 1,
+        firstName: 'Somebody',
+        lastName: 'Else',
+        status: 'inactive',
+        visible: true
+      }
+    ];
+
+    let element;
+    let rows;
+
+    beforeEach(() => {
+      component.settings = filterSettings;
+      component.data = filterData;
+
+      component.ngOnChanges({
+        settings: new SimpleChange(null, filterSettings, true),
+        data: new SimpleChange(null, filterData, true)
+      });
+
+      fixture.detectChanges();
+
+      element = fixture.nativeElement as HTMLTableElement;
+      rows = element.querySelectorAll('thead tr');
+
+      expect(rows.length).toEqual(2);
+
+      expect(rows[1].querySelector('th:first-child input').getAttribute('type')).toEqual('number');
+      expect(rows[1].querySelector('th:nth-child(2) input').getAttribute('type')).toEqual('text');
+      expect(rows[1].querySelector('th:nth-child(4) select')).toBeTruthy();
+      expect(rows[1].querySelector('th:last-child input').getAttribute('type')).toEqual('checkbox');
+    });
+
+    it('should be filtered by id', () => {
+      expect(element.querySelectorAll('tbody').length).toEqual(2);
+      const firstInput = (rows[1].querySelector('th:first-child input') as HTMLInputElement);
+      const spyFilterChange = jest.spyOn(component, 'onUpdateFilter');
+
+      firstInput.value = '0';
+      firstInput.dispatchEvent(new Event('input'));
+
+      fixture.detectChanges();
+
+      expect(spyFilterChange).toHaveBeenCalledWith({
+        type: 'number',
+        key: 'id',
+        placeholder: 'ID'
+      }, 0, '0');
+      expect(element.querySelectorAll('tbody').length).toEqual(1);
+
+      firstInput.value = '';
+      firstInput.dispatchEvent(new Event('input'));
+
+      fixture.detectChanges();
+      expect(element.querySelectorAll('tbody').length).toEqual(2);
+    });
+
+    it('should be filtered by name', () => {
+      expect(element.querySelectorAll('tbody').length).toEqual(2);
+      const input = (rows[1].querySelector('th:nth-child(2) input') as HTMLInputElement);
+      const spyFilterChange = jest.spyOn(component, 'onUpdateFilter');
+
+      input.value = 'some';
+      input.dispatchEvent(new Event('input'));
+
+      fixture.detectChanges();
+
+      expect(spyFilterChange).toHaveBeenCalledWith({
+        type: 'text',
+        key: 'firstName',
+        placeholder: 'First name'
+      }, 1, 'some');
+      expect(element.querySelectorAll('tbody').length).toEqual(1);
+
+      input.value = '';
+      input.dispatchEvent(new Event('input'));
+
+      fixture.detectChanges();
+      expect(element.querySelectorAll('tbody').length).toEqual(2);
+    });
+
+    it('should be filtered by status', () => {
+      expect(element.querySelectorAll('tbody').length).toEqual(2);
+      const select = (rows[1].querySelector('th:nth-child(4) select') as HTMLSelectElement);
+      const spyFilterChange = jest.spyOn(component, 'onUpdateFilter');
+
+      select.selectedIndex = 1;
+      select.dispatchEvent(new Event('change'));
+
+      fixture.detectChanges();
+
+      expect(spyFilterChange).toHaveBeenCalledWith({
+        type: 'select',
+        placeholder: 'Status',
+        list: [{title: 'Active', value: 'active'}, {title: 'Inactive', value: 'inactive'}],
+        key: 'status'
+      }, 3, 'active');
+
+      fixture.detectChanges();
+
+      expect(element.querySelectorAll('tbody').length).toEqual(1);
+
+      select.selectedIndex = 0;
+      select.dispatchEvent(new Event('change'));
+
+      fixture.detectChanges();
+      expect(element.querySelectorAll('tbody').length).toEqual(2);
+    });
+
+    it('should be filtered by status', () => {
+      expect(element.querySelectorAll('tbody').length).toEqual(2);
+      const checkbox = (rows[1].querySelector('th:nth-child(5) input') as HTMLInputElement);
+      const spyFilterChange = jest.spyOn(component, 'onUpdateFilter');
+
+      checkbox.checked = true;
+      checkbox.dispatchEvent(new Event('change'));
+
+      fixture.detectChanges();
+
+      expect(spyFilterChange).toHaveBeenCalledWith({
+        type: 'checkbox',
+        key: 'visible',
+        placeholder: 'Visible'
+      }, 4, true);
+
+      expect(element.querySelectorAll('tbody').length).toEqual(1);
+
+      checkbox.checked = false;
+      checkbox.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+
+      expect(element.querySelectorAll('tbody').length).toEqual(1);
+
+      checkbox.checked = true;
+      checkbox.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+
+      expect(element.querySelectorAll('tbody').length).toEqual(2);
+    });
+
   });
 
   describe('Custom table cells', () => {

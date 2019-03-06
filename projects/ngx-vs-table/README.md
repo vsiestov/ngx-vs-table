@@ -44,23 +44,47 @@ settings = {
     columns: {
         id: {
             title: '#',
-            sticky: true
+            sticky: true,
+            filter: {
+                type: 'number'
+            }
         },
         name: {
             title: 'Name',
-            sortable: false
+            sortable: false,
+            filter: true
         },
         position: {
             title: 'Position',
             sortFunction: (row) => {
                 return row.position[0];
+            },
+            filter: {
+                type: 'text',
+                placeholder: 'Filter by position',
             }
         },
         office: {
-            title: 'Office'
+            title: 'Office',
+            filter: {
+                type: 'select',
+                list: [
+                    {
+                        title: 'Title',
+                        value: 'value'
+                    },
+                    {
+                        title: 'Title 2',
+                        value: 'value2'
+                    }
+                ]
+            }
         },
         age: {
-            title: 'Age'
+            title: 'Age',
+            filter: {
+                type: 'checkbox'
+            }
         },
         start: {
             title: 'Start date'

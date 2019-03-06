@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RecursiveComponent } from './recursive.component';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 describe('RecursiveComponent', () => {
   let component: RecursiveComponent;
@@ -8,7 +9,8 @@ describe('RecursiveComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ RecursiveComponent ]
+      declarations: [ RecursiveComponent ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
   }));

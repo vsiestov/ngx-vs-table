@@ -59,6 +59,13 @@ $cell-padding: 0 0 0 5px;
         cursor: pointer;
 
         > div {
+            white-space: nowrap;
+
+            span {
+                max-width: calc(100% - 13px);
+                white-space: normal;
+            }
+
             .fa {
                 @extend %middle;
                 opacity: 0.3;
@@ -117,5 +124,17 @@ $cell-padding: 0 0 0 5px;
         .fa {
             transform: scale(1.3);
         }
+    }
+}
+
+.ngx-vs-table__cell-filter {
+    position: relative;
+
+    input,
+    select {
+        width: 100%;
+        height: 34px;
+        padding: 0 10px;
+        box-sizing: border-box;
     }
 }

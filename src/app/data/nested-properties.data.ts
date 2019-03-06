@@ -8,6 +8,7 @@ export const settings: ITableSettings = {
     },
     firstName: {
       title: 'First name',
+      filter: true,
       property: (row) => {
         return row.users.first_name;
       }

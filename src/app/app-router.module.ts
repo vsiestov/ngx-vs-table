@@ -4,6 +4,7 @@ import { MainComponent } from './components/main/main.component';
 import { NestedComponent } from './components/nested/nested.component';
 import { ExpandableComponent } from './components/expandable/expandable.component';
 import { RecursiveComponent } from './components/recursive/recursive.component';
+import { FiltersComponent } from './components/filters/filters.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'recursive',
     component: RecursiveComponent
+  },
+  {
+    path: 'filters',
+    component: FiltersComponent
   },
   { path: '',
     redirectTo: '/',

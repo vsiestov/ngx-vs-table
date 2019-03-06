@@ -17,6 +17,17 @@ export interface IPagination {
   visible: boolean;
 }
 
+export interface ITitleValue {
+  value: any;
+  title: string;
+}
+
+export interface IFilterSettings {
+  type: string;
+  list?: ITitleValue[];
+  placeholder?: string;
+}
+
 export interface IColumns {
   [propName: string]: {
     title: string;
@@ -26,6 +37,7 @@ export interface IColumns {
     sticky?: boolean;
     component?: any;
     componentOnInit?: (instance: any, row?: any) => void;
+    filter?: boolean | IFilterSettings;
   };
 }
 

@@ -252,7 +252,9 @@ export class NgxVsTableComponent implements OnChanges {
               break;
 
             default:
-              result = cell.toLowerCase().indexOf(property.value.toLowerCase()) !== -1;
+              result = (typeof cell === 'string' ? cell : cell.toString())
+                .toLowerCase()
+                .indexOf(property.value.toLowerCase()) !== -1;
           }
 
           if (!result) {

@@ -578,7 +578,7 @@ export const settings: ITableSettings = {
     id: {
       title: 'ID',
       filter: {
-        type: 'number'
+        type: 'text'
       }
     },
     name: {

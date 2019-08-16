@@ -1,4 +1,6 @@
 import { ITableSettings } from '../../../projects/ngx-vs-table/src/lib/interfaces/ngx-vs-table.interface';
+import { CheckboxCellComponent } from '../components/checkbox-cell/checkbox-cell.component';
+import { tap } from 'rxjs/operators';
 
 export const data = [
   {
@@ -576,7 +578,21 @@ export const data = [
 export const settings: ITableSettings = {
   columns: {
     id: {
-      title: 'ID',
+      title: {
+        component: CheckboxCellComponent,
+        componentOnInit: (instance: CheckboxCellComponent) => {
+          console.log('instance', instance);
+          instance.value = true;
+          instance.change
+            .pipe(
+              tap((result) => {
+                console.log(result);
+              })
+            )
+            .subscribe();
+        }
+      },
+      sortable: false,
       filter: {
         type: 'text'
       }
@@ -636,5 +652,6 @@ export const settings: ITableSettings = {
   },
   head: {
     sticky: true
-  }
+  },
+  mode: 'view'
 };

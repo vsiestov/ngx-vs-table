@@ -211,19 +211,20 @@ describe('NgxVsTableComponent', () => {
     });
 
     it('should be created without columns', () => {
-      fixture.detectChanges();
 
       component.ngOnChanges({
         settings: new SimpleChange(null, null, true),
         data: new SimpleChange(null, null, true)
       });
 
+      fixture.detectChanges();
+
       expect(component).toBeTruthy();
     });
 
     it('should be created without data', () => {
-      fixture.detectChanges();
       component.settings = simpleSettings;
+      fixture.detectChanges();
 
       component.ngOnChanges({
         settings: new SimpleChange(null, simpleSettings, true),
@@ -234,9 +235,10 @@ describe('NgxVsTableComponent', () => {
     });
 
     it('should be created with empty data', () => {
-      fixture.detectChanges();
       component.settings = simpleSettings;
       component.data = [];
+
+      fixture.detectChanges();
 
       component.ngOnChanges({
         settings: new SimpleChange(null, simpleSettings, true),

@@ -1,0 +1,9 @@
+<div (click)="onClick()">
+  <ng-container *ngIf="isFiltered; else notFiltered">
+    Reset filter
+  </ng-container>
+
+  <ng-template #notFiltered>
+    Filter by date {{ filter }}
+  </ng-template>
+</div>

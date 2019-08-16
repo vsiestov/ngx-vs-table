@@ -9,7 +9,12 @@ import { NestedComponent } from './components/nested/nested.component';
 import { ExpandableComponent } from './components/expandable/expandable.component';
 import { RecursiveComponent } from './components/recursive/recursive.component';
 import { NgxVsTableModule } from '../../projects/ngx-vs-table/src/lib/ngx-vs-table.module';
+// import { NgxVsTableModule } from '../../dist/ngx-vs-table';
 import { FiltersComponent } from './components/filters/filters.component';
+import { CustomFilterComponent } from './components/custom-filter/custom-filter.component';
+import { CustomFilterHandlerComponent } from './components/custom-filter-handler/custom-filter-handler.component';
+import { CustomPaginationComponent } from './components/custom-pagination/custom-pagination.component';
+import { CheckboxCellComponent } from './components/checkbox-cell/checkbox-cell.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +24,11 @@ import { FiltersComponent } from './components/filters/filters.component';
     NestedComponent,
     ExpandableComponent,
     RecursiveComponent,
-    FiltersComponent
+    FiltersComponent,
+    CustomFilterComponent,
+    CustomFilterHandlerComponent,
+    CustomPaginationComponent,
+    CheckboxCellComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +38,10 @@ import { FiltersComponent } from './components/filters/filters.component';
   providers: [],
   bootstrap: [AppComponent],
   entryComponents: [
-    CustomCellComponent
+    CustomCellComponent,
+    CustomFilterComponent,
+    CustomFilterHandlerComponent,
+    CheckboxCellComponent
   ]
 })
 export class AppModule { }

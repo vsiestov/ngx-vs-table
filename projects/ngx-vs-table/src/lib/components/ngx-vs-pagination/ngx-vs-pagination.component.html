@@ -1,4 +1,4 @@
-<div class="ngx-vs-pagination" *ngIf="settings.visible && count">
+<div class="ngx-vs-pagination" *ngIf="settings.visible && count && pages.length > 1">
   <div class="ngx-vs-pagination__item">
     <button class="ngx-vs-pagination__button" [disabled]="active === 0" (click)="onFirst()">
       <i class="fas fa-angle-double-left"></i>

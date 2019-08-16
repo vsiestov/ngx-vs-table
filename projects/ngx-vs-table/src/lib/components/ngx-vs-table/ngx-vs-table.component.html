@@ -1,95 +1,152 @@
-<table class="ngx-vs-table" [ngClass]="className">
-  <thead>
-    <tr>
-      <th
-        *ngFor="let cell of heads"
-        class="ngx-vs-table__head-cell"
-        [class.sortable]="cell.sortable"
-        [class.sticky]="cell.sticky"
-        [class.sticky-column]="cell.stickyColumn"
-      >
-        <div (click)="onSort(cell)">
-          <span>{{ cell.title }}</span>
-          <i
-            *ngIf="cell.sortable"
-            class="fa fa-arrows-alt-v"
-            [class.fa-long-arrow-alt-down]="cell.direction === 'desc'"
-            [class.fa-long-arrow-alt-up]="cell.direction === 'asc'"
-          ></i>
-        </div>
-      </th>
-    </tr>
+<ng-container
+  *ngIf="
+    settings?.pagination &&
+    settings.pagination.visible &&
+    (settings.pagination.position === 'top' || settings.pagination.position === 'both')
+  "
+>
+  <ng-container
+    *ngIf="paginationTemplate; else defaultPagination"
+    [ngTemplateOutlet]="paginationTemplate"
+    [ngTemplateOutletContext]="{ active: activePage, count: itemsCount, settings: settings?.pagination }"
+  >
+  </ng-container>
+</ng-container>
 
-    <tr *ngIf="hasFilter">
-      <th *ngFor="let filter of filters; let i = index" class="ngx-vs-table__head-cell">
-        <ng-container *ngIf="filter">
-          <ng-container [ngSwitch]="filter.type">
-            <div *ngSwitchCase="'checkbox'" class="ngx-vs-table__cell-filter">
-              <input type="checkbox" (change)="onChangeBoxChange(filter, i, $event)" />
-            </div>
-
-            <div *ngSwitchCase="'select'" class="ngx-vs-table__cell-filter">
-              <select (change)="onUpdateFilter(filter, i, $event.target.value)">
-                <option value="-1">{{ filter.placeholder }}</option>
-                <option
-                  *ngFor="let item of filter.list"
-                  [value]="item.value"
-                  >{{ item.title }}</option
-                >
-              </select>
-            </div>
-
-            <div *ngSwitchCase="'number'" class="ngx-vs-table__cell-filter">
-              <input
-                type="number"
-                [placeholder]="filter.placeholder"
-                (input)="onUpdateFilter(filter, i, $event.target.value)"
-              />
-            </div>
-
-            <div *ngSwitchDefault class="ngx-vs-table__cell-filter">
-              <input
-                type="text"
-                [placeholder]="filter.placeholder"
-                (input)="onUpdateFilter(filter, i, $event.target.value)"
-              />
-            </div>
-          </ng-container>
-        </ng-container>
-      </th>
-    </tr>
-  </thead>
-
-  <tbody *ngFor="let row of rows; trackBy: identify" [ngClass]="rowClassName(row)">
-    <tr>
-      <td *ngFor="let cell of row; let i = index" class="ngx-vs-table__body-cell" [class.sticky]="cell.sticky">
-        <div class="ngx-vs-table__expand-control" *ngIf="i === 0 && componentTemplate" (click)="onActiveToggle(row)">
-          <i class="fa" [class.fa-angle-down]="!row.source.isActive" [class.fa-angle-up]="row.source.isActive"></i>
-        </div>
-
-        <ngx-vs-table-cell [value]="cell"></ngx-vs-table-cell>
-      </td>
-    </tr>
-
-    <ng-container [ngTemplateOutlet]="additionalRows" [ngTemplateOutletContext]="{ row: row.source }"> </ng-container>
-
-    <ng-container *ngIf="componentTemplate && row.source.isActive">
+<div class="ngx-vs-table-wrap">
+  <table class="ngx-vs-table" [ngClass]="className">
+    <thead *ngIf="!settings?.head?.invisible">
       <tr>
-        <td [attr.colspan]="row.length" class="ngx-vs-table__outlet-cell">
-          <div class="ngx-vs-table__outlet">
-            <ng-container
-              [ngTemplateOutlet]="componentTemplate"
-              [ngTemplateOutletContext]="{ row: row.source }"
-            ></ng-container>
+        <th
+          *ngFor="let cell of heads"
+          class="ngx-vs-table__head-cell"
+          [class.sortable]="cell.sortable"
+          [class.sticky]="cell.sticky"
+          [class.sticky-column]="cell.stickyColumn"
+        >
+          <div (click)="onSort(cell)">
+            <ng-container *ngIf="cell.title && cell.title.component; else textTitle">
+              <ngx-vs-custom-cell
+                [component]="cell.title.component"
+                [init]="cell.title.componentOnInit"
+                [componentFactoryResolver]="cell.title.componentFactoryResolver"
+              ></ngx-vs-custom-cell>
+            </ng-container>
+            <ng-template #textTitle>
+              <span>{{ cell.title }}</span
+              ><i
+                *ngIf="cell.sortable"
+                class="fa fa-arrows-alt-v"
+                [class.fa-long-arrow-alt-down]="cell.direction === 'desc'"
+                [class.fa-long-arrow-alt-up]="cell.direction === 'asc'"
+              ></i>
+            </ng-template>
           </div>
+        </th>
+      </tr>
+
+      <tr *ngIf="hasFilter">
+        <th *ngFor="let filter of filters; let i = index" class="ngx-vs-table__head-cell">
+          <ng-container *ngIf="filter">
+            <ng-container [ngSwitch]="filter.type">
+              <div *ngSwitchCase="'custom'" class="ngx-vs-table__cell-filter">
+                <ngx-vs-custom-cell
+                  [component]="filter.component"
+                  [init]="filter.componentOnInit"
+                  [componentFactoryResolver]="filter.componentFactoryResolver"
+                  [value]="{ filter: filter, index: i }"
+                  [action]="onUpdateFilter"
+                ></ngx-vs-custom-cell>
+              </div>
+
+              <div *ngSwitchCase="'checkbox'" class="ngx-vs-table__cell-filter">
+                <input type="checkbox" (change)="onChangeBoxChange(filter, i, $event)" />
+              </div>
+
+              <div *ngSwitchCase="'select'" class="ngx-vs-table__cell-filter">
+                <select (change)="onUpdateFilter(filter, i, $event.target.value)">
+                  <option value="-1">{{ filter.placeholder }}</option>
+                  <option *ngFor="let item of filter.list" [value]="item.value">{{ item.title }}</option>
+                </select>
+              </div>
+
+              <div *ngSwitchCase="'number'" class="ngx-vs-table__cell-filter">
+                <input
+                  type="number"
+                  [placeholder]="filter.placeholder"
+                  (input)="onUpdateFilter(filter, i, $event.target.value)"
+                />
+              </div>
+
+              <div *ngSwitchDefault class="ngx-vs-table__cell-filter">
+                <input
+                  type="text"
+                  [placeholder]="filter.placeholder"
+                  (input)="onUpdateFilter(filter, i, $event.target.value)"
+                />
+              </div>
+            </ng-container>
+          </ng-container>
+        </th>
+      </tr>
+    </thead>
+
+    <tbody *ngFor="let row of rows; trackBy: identify" [ngClass]="rowClassName(row)">
+      <tr>
+        <td *ngFor="let cell of row; let i = index" class="ngx-vs-table__body-cell" [class.sticky]="cell.sticky">
+          <div class="ngx-vs-table__expand-control" *ngIf="i === 0 && componentTemplate" (click)="onActiveToggle(row)">
+            <i class="fa" [class.fa-angle-down]="!row.source.isActive" [class.fa-angle-up]="row.source.isActive"></i>
+          </div>
+
+          <ngx-vs-table-cell [value]="cell"></ngx-vs-table-cell>
         </td>
       </tr>
-    </ng-container>
-  </tbody>
-</table>
 
-<ngx-vs-pagination
-  [settings]="settings?.pagination"
-  [count]="itemsCount"
-  (changed)="onPageChange($event)"
-></ngx-vs-pagination>
+      <ng-container [ngTemplateOutlet]="additionalRows" [ngTemplateOutletContext]="{ row: row.source }"></ng-container>
+
+      <ng-container *ngIf="componentTemplate && row.source.isActive">
+        <tr *ngIf="!settings.componentTemplate?.custom; else useCustomRow">
+          <td [attr.colspan]="row.length" class="ngx-vs-table__outlet-cell">
+            <div class="ngx-vs-table__outlet">
+              <ng-container
+                [ngTemplateOutlet]="componentTemplate"
+                [ngTemplateOutletContext]="{ row: row.source }"
+              ></ng-container>
+            </div>
+          </td>
+        </tr>
+
+        <ng-template #useCustomRow>
+          <ng-container
+            [ngTemplateOutlet]="componentTemplate"
+            [ngTemplateOutletContext]="{ row: row.source }"
+          ></ng-container>
+        </ng-template>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
+
+<ng-container
+  *ngIf="
+    settings?.pagination &&
+    settings.pagination.visible &&
+    (settings.pagination.position === 'bottom' || settings.pagination.position === 'both' || !settings.pagination.position)
+  "
+>
+  <ng-container
+    *ngIf="paginationTemplate; else defaultPagination"
+    [ngTemplateOutlet]="paginationTemplate"
+    [ngTemplateOutletContext]="{ active: activePage, count: itemsCount, settings: settings?.pagination }"
+  >
+  </ng-container>
+</ng-container>
+
+<ng-template #defaultPagination>
+  <ngx-vs-pagination
+    [settings]="settings?.pagination"
+    [count]="itemsCount"
+    [activePage]="activePage"
+    (changed)="onPageChange($event)"
+  ></ngx-vs-pagination>
+</ng-template>

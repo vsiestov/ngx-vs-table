@@ -10,10 +10,10 @@ import { IPagination } from '../../interfaces/ngx-vs-table.interface';
 export class NgxVsPaginationComponent implements OnChanges {
   @Input() settings: IPagination;
   @Input() count: number;
-  @Output() changed: EventEmitter<number>;
+  @Input('activePage') active: number;
 
+  @Output() changed: EventEmitter<number>;
   pages: number[];
-  active: number;
 
   private readonly defaultSettings: IPagination;
 

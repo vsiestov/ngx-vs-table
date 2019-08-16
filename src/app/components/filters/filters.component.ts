@@ -15,4 +15,7 @@ export class FiltersComponent implements OnInit {
   ngOnInit() {
   }
 
+  filterTriggered(event) {
+    console.log('event', event);
+  }
 }

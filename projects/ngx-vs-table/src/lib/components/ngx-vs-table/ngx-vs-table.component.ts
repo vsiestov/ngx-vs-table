@@ -1,9 +1,20 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
+  TemplateRef
+} from '@angular/core';
 import { IFilterSettings, ITableHeadCell, ITableSettings } from '../../interfaces/ngx-vs-table.interface';
 import { omit, orderBy } from 'lodash-es';
 
 interface ITableFilter extends IFilterSettings {
   key: string;
+  componentFactoryResolver?: ComponentFactoryResolver;
 }
 
 @Component({
@@ -18,9 +29,16 @@ export class NgxVsTableComponent implements OnChanges {
   @Input() settings: ITableSettings;
   @Input() additionalRows: TemplateRef<any>;
   @Input() className: string;
-  @Output() pageChanged: EventEmitter<number>;
+  @Input() paginationTemplate: TemplateRef<any>;
+  @Input() activePage: number;
 
-  private activePage: number;
+  @Output() pageChanged: EventEmitter<number>;
+  @Output() toggle: EventEmitter<boolean>;
+  @Output() filterTriggered: EventEmitter<any>;
+
+  private cachedData: any[];
+  private cachedFilterConfig: any;
+  private cachedSortConfig: any;
   private defaultSettings: ITableSettings;
   private sortConfig: {
     key: string;
@@ -32,13 +50,20 @@ export class NgxVsTableComponent implements OnChanges {
   hasFilter: boolean;
   heads: ITableHeadCell[];
   filters: ITableFilter[];
-  rows: any[][];
+  rows: {
+    [position: number]: any;
+    source: any;
+    length: number;
+  }[];
   keys: string[];
   filterConfig: any;
   itemsCount: number;
+  responsiveColumnsCount: number;
 
   constructor() {
     this.pageChanged = new EventEmitter();
+    this.toggle = new EventEmitter();
+    this.filterTriggered = new EventEmitter();
     this.className = '';
     this.heads = [];
     this.rows = [];
@@ -48,16 +73,20 @@ export class NgxVsTableComponent implements OnChanges {
     this.defaultSettings = {
       columns: {},
       head: {
-        sticky: false
+        sticky: false,
+        invisible: false
       },
       pagination: {
         visible: false,
-        perPage: 20
+        perPage: 20,
+        position: 'bottom'
       },
       rowClassFunction: () => {
         return '';
-      }
+      },
+      mode: 'none'
     };
+    this.onUpdateFilter = this.onUpdateFilter.bind(this);
   }
 
   private updateSettings() {
@@ -78,23 +107,28 @@ export class NgxVsTableComponent implements OnChanges {
     this.hasFilter = false;
     this.filters = [];
     this.filterConfig = {};
+    this.responsiveColumnsCount = 0;
 
     this.heads = keys.map((item) => {
 
       if (columns[item].filter) {
         this.hasFilter = true;
 
+        const placeholder = typeof columns[item].title === 'string'
+          ? columns[item].title as string
+          : '';
+
         if (typeof columns[item].filter === 'boolean') {
           this.filters.push({
             type: 'text',
-            placeholder: columns[item].title,
+            placeholder,
             key: item
           });
         } else if (typeof columns[item].filter === 'object' && columns[item].filter.constructor === Object) {
           this.filters.push({
             ...(columns[item].filter as IFilterSettings),
             key: item,
-            placeholder: (columns[item].filter as IFilterSettings).placeholder || columns[item].title
+            placeholder: (columns[item].filter as IFilterSettings).placeholder || placeholder
           });
         }
       } else {
@@ -114,9 +148,7 @@ export class NgxVsTableComponent implements OnChanges {
       };
     });
 
-    if (this.data) {
-      this.updateData(this.data);
-    }
+    this.updateData(this.data);
   }
 
   private transformData(columns, keys, data) {
@@ -128,6 +160,7 @@ export class NgxVsTableComponent implements OnChanges {
           return {
             component: columns[item].component,
             componentOnInit: columns[item].componentOnInit,
+            componentFactoryResolver: columns[item].componentFactoryResolver,
             value: row
           };
         }
@@ -165,6 +198,25 @@ export class NgxVsTableComponent implements OnChanges {
 
     if (!data.length) {
       this.rows = [];
+      this.itemsCount = 0;
+
+      if (this.settings.mode === 'view') {
+
+        if (this.filterConfig !== this.cachedFilterConfig || this.sortConfig !== this.cachedSortConfig) {
+          this.filterTriggered.emit({
+            filter: this.filterConfig,
+            sort: this.sortConfig
+              ? {
+                key: this.sortConfig.key,
+                direction: this.sortConfig.direction
+              }
+              : {}
+          });
+
+          this.cachedFilterConfig = this.filterConfig;
+          this.cachedSortConfig = this.sortConfig;
+        }
+      }
 
       return;
     }
@@ -184,7 +236,37 @@ export class NgxVsTableComponent implements OnChanges {
       ? this.sortByKey(this.sortConfig.key, this.sortConfig.direction, this.sortConfig.sortFunction || this.sortConfig.property)
       : data;
 
-    const pagination = settings.pagination;
+    if (this.settings.mode === 'view') {
+      if (this.filterConfig !== this.cachedFilterConfig || this.sortConfig !== this.cachedSortConfig) {
+        this.filterTriggered.emit({
+          filter: this.filterConfig,
+          sort: this.sortConfig
+            ? {
+              key: this.sortConfig.key,
+              direction: this.sortConfig.direction
+            }
+            : {}
+        });
+      }
+
+      this.cachedFilterConfig = this.filterConfig;
+      this.cachedSortConfig = this.sortConfig;
+
+      if (sortedData === this.cachedData) {
+        return;
+      }
+
+      this.cachedData = sortedData;
+
+      this.rows = this.transformData(columns, keys, data);
+
+      return;
+    }
+
+    const pagination = settings && settings.pagination
+      ? settings.pagination
+      : this.defaultSettings.pagination;
+
     const offset = this.activePage * pagination.perPage;
 
     if (this.hasFilter) {
@@ -194,10 +276,10 @@ export class NgxVsTableComponent implements OnChanges {
       this.itemsCount = filteredData.length;
       this.rows = list;
     } else {
-        const list = this.sliceData(pagination, offset, sortedData);
+      const list = this.sliceData(pagination, offset, sortedData);
 
-        this.itemsCount = sortedData.length;
-        this.rows = this.transformData(columns, keys, list);
+      this.itemsCount = sortedData.length;
+      this.rows = this.transformData(columns, keys, list);
     }
 
   }
@@ -214,15 +296,23 @@ export class NgxVsTableComponent implements OnChanges {
       return omit(head, 'direction');
     });
 
+    if (this.settings.mode === 'view') {
+      return this.data;
+    }
+
     return orderBy(this.data, func ? func : [key], direction);
   }
 
-  private clearFilterProperty(prop) {
-    delete this.filterConfig[prop];
+  private clearFilterProperty(prop: ITableFilter) {
+    delete this.filterConfig[prop.key];
 
     this.filterConfig = {
       ...this.filterConfig
     };
+
+    if (prop.filterFunction && typeof prop.filterFunction === 'function') {
+      prop.filterFunction(null, null);
+    }
   }
 
   private filterItems(value: any[], args?: any): any {
@@ -280,6 +370,10 @@ export class NgxVsTableComponent implements OnChanges {
     if (changes.data) {
       this.updateData(changes.data.currentValue);
     }
+
+    if (changes.activePage) {
+      this.onPageChange(changes.activePage.currentValue);
+    }
   }
 
   onSort(cell: ITableHeadCell) {
@@ -303,6 +397,12 @@ export class NgxVsTableComponent implements OnChanges {
   }
 
   onActiveToggle(row) {
+    if (this.settings.mode === 'view') {
+      this.toggle.emit(row);
+
+      return;
+    }
+
     const index = this.rows.indexOf(row);
 
     if (index === -1) {
@@ -317,15 +417,12 @@ export class NgxVsTableComponent implements OnChanges {
     };
 
     this.rows = [...this.rows.slice(0, index), result, ...this.rows.slice(index + 1)];
+    this.toggle.emit(result.source);
   }
 
   onPageChange(page: number) {
     this.activePage = page;
-
-    if (this.settings.pagination.visible) {
-      this.updateData(this.data);
-    }
-
+    this.updateData(this.data);
     this.pageChanged.emit(page);
   }
 
@@ -359,7 +456,7 @@ export class NgxVsTableComponent implements OnChanges {
             }
           };
         } else {
-          this.clearFilterProperty(filter.key);
+          this.clearFilterProperty(filter);
         }
 
         break;
@@ -376,7 +473,7 @@ export class NgxVsTableComponent implements OnChanges {
             }
           };
         } else {
-          this.clearFilterProperty(filter.key);
+          this.clearFilterProperty(filter);
         }
         break;
 
@@ -393,12 +490,12 @@ export class NgxVsTableComponent implements OnChanges {
             }
           };
         } else {
-          this.clearFilterProperty(filter.key);
+          this.clearFilterProperty(filter);
         }
         break;
 
       default:
-        result = value.trim();
+        result = typeof value === 'string' ? value.trim() : value;
 
         if (result) {
           this.filterConfig = {
@@ -411,7 +508,7 @@ export class NgxVsTableComponent implements OnChanges {
             }
           };
         } else {
-          this.clearFilterProperty(filter.key);
+          this.clearFilterProperty(filter);
         }
     }
 

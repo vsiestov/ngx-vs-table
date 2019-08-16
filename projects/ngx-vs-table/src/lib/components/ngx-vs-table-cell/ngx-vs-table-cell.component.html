@@ -1,6 +1,11 @@
 
 <ng-container *ngIf="value?.component; else renderTextCell">
-  <ngx-vs-custom-cell [component]="value.component" [value]="value.value" [init]="value.componentOnInit"></ngx-vs-custom-cell>
+  <ngx-vs-custom-cell
+    [component]="value.component"
+    [value]="value.value"
+    [init]="value.componentOnInit"
+    [componentFactoryResolver]="value.componentFactoryResolver"
+  ></ngx-vs-custom-cell>
 </ng-container>
 
 <ng-template #renderTextCell>

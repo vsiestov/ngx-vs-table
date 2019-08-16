@@ -16,6 +16,9 @@ export class RecursiveComponent implements OnInit {
       type: {
         title: 'Type'
       }
+    },
+    head: {
+      invisible: true
     }
   };
 

@@ -94,20 +94,30 @@
     <tbody *ngFor="let row of rows; trackBy: identify" [ngClass]="rowClassName(row)">
       <tr>
         <td *ngFor="let cell of row; let i = index" class="ngx-vs-table__body-cell" [class.sticky]="cell[0]?.sticky">
-          <div class="ngx-vs-table__expand-control" *ngIf="i === 0 && componentTemplate" (click)="onActiveToggle(row)">
-            <i class="fa" [class.fa-angle-down]="!row.source.isActive" [class.fa-angle-up]="row.source.isActive"></i>
-          </div>
-
-          <ng-container *ngIf="cell.length > 1; else renderSingleValue">
-            <ng-container *ngFor="let cellItem of cell">
-              <div>
-                <ngx-vs-table-cell [value]="cellItem"></ngx-vs-table-cell>
+          <ng-container *ngIf="i === 0 && componentTemplate; else cellContent">
+            <div class="ngx-vs-table__expand">
+              <div class="ngx-vs-table__expand-control" (click)="onActiveToggle(row)">
+                <i class="fa" [class.fa-angle-down]="!row.source.isActive" [class.fa-angle-up]="row.source.isActive"></i>
               </div>
-            </ng-container>
+
+              <div class="ngx-vs-table__expand-data">
+                <ng-container [ngTemplateOutlet]="cellContent"></ng-container>
+              </div>
+            </div>
           </ng-container>
 
-          <ng-template #renderSingleValue>
-            <ngx-vs-table-cell [value]="cell[0]"></ngx-vs-table-cell>
+          <ng-template #cellContent>
+            <ng-container *ngIf="cell.length > 1; else renderSingleValue">
+              <ng-container *ngFor="let cellItem of cell">
+                <div class="ngx-vs-table__responsive-row">
+                  <ngx-vs-table-cell [value]="cellItem"></ngx-vs-table-cell>
+                </div>
+              </ng-container>
+            </ng-container>
+
+            <ng-template #renderSingleValue>
+              <ngx-vs-table-cell [value]="cell[0]"></ngx-vs-table-cell>
+            </ng-template>
           </ng-template>
         </td>
       </tr>

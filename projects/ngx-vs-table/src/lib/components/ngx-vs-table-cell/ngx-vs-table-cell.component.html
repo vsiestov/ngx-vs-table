@@ -1,12 +1,22 @@
 
 <ng-container *ngIf="value?.component; else renderTextCell">
-  <ngx-vs-custom-cell
-    [component]="value.component"
-    [value]="value.value"
-    [label]="value.label"
-    [init]="value.componentOnInit"
-    [componentFactoryResolver]="value.componentFactoryResolver"
-  ></ngx-vs-custom-cell>
+  <ng-container *ngIf="value?.label; else renderValue">
+    <label class="ngx-vs-table__cell-label">{{ value?.label }}</label>
+    <span class="ngx-vs-table__cell-value">
+      <ng-container [ngTemplateOutlet]="renderValue"></ng-container>
+    </span>
+  </ng-container>
+
+  <ng-template #renderValue>
+    <ngx-vs-custom-cell
+      [component]="value.component"
+      [value]="value.value"
+      [label]="value.label"
+      [init]="value.componentOnInit"
+      [componentFactoryResolver]="value.componentFactoryResolver"
+    ></ngx-vs-custom-cell>
+  </ng-template>
+
 </ng-container>
 
 <ng-template #renderTextCell>

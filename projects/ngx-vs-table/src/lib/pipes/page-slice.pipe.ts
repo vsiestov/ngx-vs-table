@@ -8,7 +8,7 @@ export class PageSlicePipe implements PipeTransform {
   size: number;
 
   constructor() {
-    this.size = 5;
+    this.size = 4;
   }
 
   transform(value: any[], current: number, count: number): any {

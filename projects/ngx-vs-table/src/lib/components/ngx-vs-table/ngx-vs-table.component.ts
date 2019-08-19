@@ -95,6 +95,8 @@ export class NgxVsTableComponent implements OnChanges {
   }
 
   private matchMediaListener() {
+    this.matchMediaChanged = true;
+
     this.updateData(this.data);
   }
 
@@ -155,7 +157,6 @@ export class NgxVsTableComponent implements OnChanges {
       }
 
       medias.forEach((media) => {
-        this.matchMediaChanged = true;
         media.addEventListener('change', this.matchMediaListener);
       });
 
@@ -347,7 +348,7 @@ export class NgxVsTableComponent implements OnChanges {
       this.cachedFilterConfig = this.filterConfig;
       this.cachedSortConfig = this.sortConfig;
 
-      if (sortedData === this.cachedData) {
+      if (!this.matchMediaChanged && sortedData === this.cachedData) {
         return;
       }
 

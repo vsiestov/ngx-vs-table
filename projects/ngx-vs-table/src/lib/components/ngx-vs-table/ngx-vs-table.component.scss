@@ -106,9 +106,13 @@ $cell-padding: 0 0 0 5px;
 
 }
 
+.ngx-vs-table__expand {
+    display: flex;
+    align-items: center;
+}
+
 .ngx-vs-table__expand-control {
     @extend %align-middle;
-    @extend %middle;
     position: relative;
     width: 38px;
     height: 38px;
@@ -125,6 +129,10 @@ $cell-padding: 0 0 0 5px;
             transform: scale(1.3);
         }
     }
+}
+
+.ngx-vs-table__expand-data {
+    max-width: calc(100% - 48px);
 }
 
 .ngx-vs-table__cell-filter {

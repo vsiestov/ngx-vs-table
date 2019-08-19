@@ -15,7 +15,7 @@
 
 <div class="ngx-vs-table-wrap">
   <table class="ngx-vs-table" [ngClass]="className">
-    <thead *ngIf="!settings?.head?.invisible">
+    <thead *ngIf="!settings?.head?.invisible && !isResponsiveMatch">
       <tr>
         <th
           *ngFor="let cell of heads"
@@ -93,12 +93,22 @@
 
     <tbody *ngFor="let row of rows; trackBy: identify" [ngClass]="rowClassName(row)">
       <tr>
-        <td *ngFor="let cell of row; let i = index" class="ngx-vs-table__body-cell" [class.sticky]="cell.sticky">
+        <td *ngFor="let cell of row; let i = index" class="ngx-vs-table__body-cell" [class.sticky]="cell[0]?.sticky">
           <div class="ngx-vs-table__expand-control" *ngIf="i === 0 && componentTemplate" (click)="onActiveToggle(row)">
             <i class="fa" [class.fa-angle-down]="!row.source.isActive" [class.fa-angle-up]="row.source.isActive"></i>
           </div>
 
-          <ngx-vs-table-cell [value]="cell"></ngx-vs-table-cell>
+          <ng-container *ngIf="cell.length > 1; else renderSingleValue">
+            <ng-container *ngFor="let cellItem of cell">
+              <div>
+                <ngx-vs-table-cell [value]="cellItem"></ngx-vs-table-cell>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <ng-template #renderSingleValue>
+            <ngx-vs-table-cell [value]="cell[0]"></ngx-vs-table-cell>
+          </ng-template>
         </td>
       </tr>
 

@@ -574,6 +574,7 @@ export const data = [
     visible: false
   }
 ];
+const media = window.matchMedia ? window.matchMedia('(max-width: 768px)') : null;
 
 export const settings: ITableSettings = {
   columns: {
@@ -581,7 +582,6 @@ export const settings: ITableSettings = {
       title: {
         component: CheckboxCellComponent,
         componentOnInit: (instance: CheckboxCellComponent) => {
-          console.log('instance', instance);
           instance.value = true;
           instance.change
             .pipe(
@@ -595,25 +595,53 @@ export const settings: ITableSettings = {
       sortable: false,
       filter: {
         type: 'text'
-      }
+      },
+      responsive: [
+        {
+          label: 'id: ',
+          column: 0,
+          media
+        }
+      ]
     },
     name: {
       title: 'Name',
-      filter: true
+      filter: true,
+      responsive: [
+        {
+          label: true,
+          column: 0,
+          media
+        }
+      ]
     },
     position: {
       title: 'Position',
       filter: {
         type: 'text',
         placeholder: 'Filter by position',
-      }
+      },
+      responsive: [
+        {
+          label: true,
+          column: 1,
+          media
+        }
+      ]
     },
     salary: {
       title: 'Salary',
-      sortFunction: (row) => {
+      sortFunction: (instance, row) => {
         return parseFloat(row.salary.replace(/\D/g, ''));
       },
-      filter: true
+      filter: true,
+      responsive: [
+        {
+          label: true,
+          column: 1,
+          media
+        }
+      ]
     },
     start_date: {
       title: 'Start date',
@@ -625,11 +653,25 @@ export const settings: ITableSettings = {
         filterFunction: (row, value) => {
           return row.start_date.indexOf(value.toLowerCase()) !== -1;
         }
-      }
+      },
+      responsive: [
+        {
+          label: true,
+          column: 1,
+          media
+        }
+      ]
     },
     office: {
       title: 'Office',
-      filter: true
+      filter: true,
+      responsive: [
+        {
+          label: true,
+          column: 2,
+          media
+        }
+      ]
     },
     extn: {
       title: 'Extn.',
@@ -641,13 +683,27 @@ export const settings: ITableSettings = {
             value: item.extn
           };
         })
-      }
+      },
+      responsive: [
+        {
+          label: true,
+          column: 2,
+          media
+        }
+      ]
     },
     visible: {
       title: 'Visible',
       filter: {
         type: 'checkbox'
-      }
+      },
+      responsive: [
+        {
+          label: true,
+          column: 2,
+          media
+        }
+      ]
     }
   },
   head: {

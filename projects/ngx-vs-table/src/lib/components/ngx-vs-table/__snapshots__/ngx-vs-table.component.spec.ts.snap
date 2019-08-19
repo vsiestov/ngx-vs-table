@@ -3,6 +3,7 @@
 exports[`NgxVsTableComponent Custom table cells should be rendered with a component cell 1`] = `
 <ngx-vs-table
   activePage="0"
+  cdr={[Function ViewRef_]}
   className=""
   defaultSettings={[Function Object]}
   filterConfig={[Function Object]}
@@ -10,11 +11,15 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
   filters={[Function Array]}
   hasFilter="false"
   heads={[Function Array]}
+  isResponsiveMatch="false"
   itemsCount={[Function Number]}
   keys={[Function Array]}
+  matchMediaChanged="false"
+  matchMediaListener={[Function Function]}
   onSort={[Function Function]}
   onUpdateFilter={[Function Function]}
   pageChanged={[Function EventEmitter]}
+  responsiveColumnsCount="0"
   rows={[Function Array]}
   settings={[Function Object]}
   toggle={[Function EventEmitter]}
@@ -121,57 +126,70 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
             class="ngx-vs-table__body-cell"
           >
             
-            <ngx-vs-table-cell
-              ng-reflect-value="[object Object]"
-            >
-              
-               0
-  
-              
-            </ngx-vs-table-cell>
-          </td>
-          <td
-            class="ngx-vs-table__body-cell"
-          >
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
             >
               
-               Valeriy
-  
+              
+              0
+              
               
             </ngx-vs-table-cell>
+            
           </td>
           <td
             class="ngx-vs-table__body-cell"
           >
             
-            <ngx-vs-table-cell
-              ng-reflect-value="[object Object]"
-            >
-              
-               Siestov
-  
-              
-            </ngx-vs-table-cell>
-          </td>
-          <td
-            class="ngx-vs-table__body-cell"
-          >
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
             >
               
-               vsi@container-xchange.com
-  
+              
+              Valeriy
+              
               
             </ngx-vs-table-cell>
+            
           </td>
           <td
             class="ngx-vs-table__body-cell"
           >
+            
+            
+            <ngx-vs-table-cell
+              ng-reflect-value="[object Object]"
+            >
+              
+              
+              Siestov
+              
+              
+            </ngx-vs-table-cell>
+            
+          </td>
+          <td
+            class="ngx-vs-table__body-cell"
+          >
+            
+            
+            <ngx-vs-table-cell
+              ng-reflect-value="[object Object]"
+            >
+              
+              
+              vsi@container-xchange.com
+              
+              
+            </ngx-vs-table-cell>
+            
+          </td>
+          <td
+            class="ngx-vs-table__body-cell"
+          >
+            
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
@@ -211,6 +229,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
               </ngx-vs-custom-cell>
               
             </ngx-vs-table-cell>
+            
           </td>
         </tr>
         
@@ -225,57 +244,70 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
             class="ngx-vs-table__body-cell"
           >
             
-            <ngx-vs-table-cell
-              ng-reflect-value="[object Object]"
-            >
-              
-               1
-  
-              
-            </ngx-vs-table-cell>
-          </td>
-          <td
-            class="ngx-vs-table__body-cell"
-          >
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
             >
               
-               Somebody
-  
+              
+              1
+              
               
             </ngx-vs-table-cell>
+            
           </td>
           <td
             class="ngx-vs-table__body-cell"
           >
             
-            <ngx-vs-table-cell
-              ng-reflect-value="[object Object]"
-            >
-              
-               Else
-  
-              
-            </ngx-vs-table-cell>
-          </td>
-          <td
-            class="ngx-vs-table__body-cell"
-          >
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
             >
               
-               ses@container-xchange.com
-  
+              
+              Somebody
+              
               
             </ngx-vs-table-cell>
+            
           </td>
           <td
             class="ngx-vs-table__body-cell"
           >
+            
+            
+            <ngx-vs-table-cell
+              ng-reflect-value="[object Object]"
+            >
+              
+              
+              Else
+              
+              
+            </ngx-vs-table-cell>
+            
+          </td>
+          <td
+            class="ngx-vs-table__body-cell"
+          >
+            
+            
+            <ngx-vs-table-cell
+              ng-reflect-value="[object Object]"
+            >
+              
+              
+              ses@container-xchange.com
+              
+              
+            </ngx-vs-table-cell>
+            
+          </td>
+          <td
+            class="ngx-vs-table__body-cell"
+          >
+            
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
@@ -315,6 +347,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
               </ngx-vs-custom-cell>
               
             </ngx-vs-table-cell>
+            
           </td>
         </tr>
         
@@ -329,57 +362,70 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
             class="ngx-vs-table__body-cell"
           >
             
-            <ngx-vs-table-cell
-              ng-reflect-value="[object Object]"
-            >
-              
-               2
-  
-              
-            </ngx-vs-table-cell>
-          </td>
-          <td
-            class="ngx-vs-table__body-cell"
-          >
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
             >
               
-               Third
-  
+              
+              2
+              
               
             </ngx-vs-table-cell>
+            
           </td>
           <td
             class="ngx-vs-table__body-cell"
           >
             
-            <ngx-vs-table-cell
-              ng-reflect-value="[object Object]"
-            >
-              
-               Forth
-  
-              
-            </ngx-vs-table-cell>
-          </td>
-          <td
-            class="ngx-vs-table__body-cell"
-          >
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
             >
               
-               ses@container-xchange.com
-  
+              
+              Third
+              
               
             </ngx-vs-table-cell>
+            
           </td>
           <td
             class="ngx-vs-table__body-cell"
           >
+            
+            
+            <ngx-vs-table-cell
+              ng-reflect-value="[object Object]"
+            >
+              
+              
+              Forth
+              
+              
+            </ngx-vs-table-cell>
+            
+          </td>
+          <td
+            class="ngx-vs-table__body-cell"
+          >
+            
+            
+            <ngx-vs-table-cell
+              ng-reflect-value="[object Object]"
+            >
+              
+              
+              ses@container-xchange.com
+              
+              
+            </ngx-vs-table-cell>
+            
+          </td>
+          <td
+            class="ngx-vs-table__body-cell"
+          >
+            
             
             <ngx-vs-table-cell
               ng-reflect-value="[object Object]"
@@ -419,6 +465,7 @@ exports[`NgxVsTableComponent Custom table cells should be rendered with a compon
               </ngx-vs-custom-cell>
               
             </ngx-vs-table-cell>
+            
           </td>
         </tr>
         

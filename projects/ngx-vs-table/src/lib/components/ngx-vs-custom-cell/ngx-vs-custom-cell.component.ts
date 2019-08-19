@@ -25,6 +25,7 @@ export class NgxVsCustomCellComponent implements OnInit, OnDestroy {
   @Input() componentFactoryResolver: ComponentFactoryResolver;
   @Input() init: (...args) => void;
   @Input() action: (filter: any, index: number, value: any) => any;
+  @Input() label: string;
 
   componentRef: ComponentRef<any>;
 

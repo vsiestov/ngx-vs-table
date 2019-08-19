@@ -264,7 +264,7 @@ describe('NgxVsTableComponent', () => {
       expect(component.heads[0].title).toEqual('ID');
 
       expect(component.rows.length).toEqual(2);
-      expect(component.rows[0][1].value).toEqual(simpleData[0].firstName);
+      expect(component.rows[0][1][0].value).toEqual(simpleData[0].firstName);
 
       const element = fixture.nativeElement as HTMLTableElement;
       const headCells = element.querySelectorAll('thead tr th');
@@ -311,8 +311,8 @@ describe('NgxVsTableComponent', () => {
         stickyColumn: false
       });
 
-      expect(component.rows[0][0].value).toEqual(0);
-      expect(component.rows[1][0].value).toEqual(1);
+      expect(component.rows[0][0][0].value).toEqual(0);
+      expect(component.rows[1][0][0].value).toEqual(1);
 
       fixture.detectChanges();
 
@@ -330,10 +330,10 @@ describe('NgxVsTableComponent', () => {
 
       fixture.detectChanges();
 
-      expect(component.rows[0][0]).toEqual({
+      expect(component.rows[0][0][0]).toEqual({
         value: 1
       });
-      expect(component.rows[1][0].value).toEqual(0);
+      expect(component.rows[1][0][0].value).toEqual(0);
     });
 
     it('should sort columns with a specific function', () => {
@@ -355,8 +355,8 @@ describe('NgxVsTableComponent', () => {
 
       expect(component.onSort).toHaveBeenCalled();
 
-      expect(component.rows[0][0].value).toEqual(0);
-      expect(component.rows[1][0].value).toEqual(1);
+      expect(component.rows[0][0][0].value).toEqual(0);
+      expect(component.rows[1][0][0].value).toEqual(1);
 
       fixture.detectChanges();
 
@@ -366,10 +366,10 @@ describe('NgxVsTableComponent', () => {
 
       fixture.detectChanges();
 
-      expect(component.rows[0][0]).toEqual({
+      expect(component.rows[0][0][0]).toEqual({
         value: 2
       });
-      expect(component.rows[1][0].value).toEqual(1);
+      expect(component.rows[1][0][0].value).toEqual(1);
     });
 
     it('should be rendered with complex data', () => {
@@ -387,7 +387,7 @@ describe('NgxVsTableComponent', () => {
       expect(component.heads[0].title).toEqual('ID');
 
       expect(component.rows.length).toEqual(3);
-      expect(component.rows[0][1].value).toEqual(complexData[0].firstName.value);
+      expect(component.rows[0][1][0].value).toEqual(complexData[0].firstName.value);
 
       const element = fixture.nativeElement as HTMLTableElement;
       const headCells = element.querySelectorAll('thead tr th');
@@ -427,8 +427,8 @@ describe('NgxVsTableComponent', () => {
 
       expect(component.onSort).toHaveBeenCalled();
 
-      expect(component.rows[0][0].value).toBe(0);
-      expect(component.rows[1][0].value).toEqual(1);
+      expect(component.rows[0][0][0].value).toBe(0);
+      expect(component.rows[1][0][0].value).toEqual(1);
 
       fixture.detectChanges();
 
@@ -438,8 +438,8 @@ describe('NgxVsTableComponent', () => {
 
       fixture.detectChanges();
 
-      expect(component.rows[0][0].value).toEqual(2);
-      expect(component.rows[1][0].value).toEqual(1);
+      expect(component.rows[0][0][0].value).toEqual(2);
+      expect(component.rows[1][0][0].value).toEqual(1);
     });
   });
 

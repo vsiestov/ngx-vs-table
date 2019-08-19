@@ -1,5 +1,5 @@
 import {
-  ChangeDetectionStrategy,
+  ChangeDetectionStrategy, ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
   EventEmitter,
@@ -9,7 +9,7 @@ import {
   SimpleChanges,
   TemplateRef
 } from '@angular/core';
-import { IFilterSettings, ITableHeadCell, ITableSettings } from '../../interfaces/ngx-vs-table.interface';
+import { IColumns, IFilterSettings, ITableHeadCell, ITableSettings } from '../../interfaces/ngx-vs-table.interface';
 import { omit, orderBy } from 'lodash-es';
 
 interface ITableFilter extends IFilterSettings {
@@ -46,6 +46,7 @@ export class NgxVsTableComponent implements OnChanges {
     property?: () => void,
     sortFunction?: () => void
   };
+  private matchMediaChanged: boolean;
 
   hasFilter: boolean;
   heads: ITableHeadCell[];
@@ -59,8 +60,11 @@ export class NgxVsTableComponent implements OnChanges {
   filterConfig: any;
   itemsCount: number;
   responsiveColumnsCount: number;
+  isResponsiveMatch: boolean;
 
-  constructor() {
+  constructor(
+    private cdr: ChangeDetectorRef
+  ) {
     this.pageChanged = new EventEmitter();
     this.toggle = new EventEmitter();
     this.filterTriggered = new EventEmitter();
@@ -87,6 +91,11 @@ export class NgxVsTableComponent implements OnChanges {
       mode: 'none'
     };
     this.onUpdateFilter = this.onUpdateFilter.bind(this);
+    this.matchMediaListener = this.matchMediaListener.bind(this);
+  }
+
+  private matchMediaListener() {
+    this.updateData(this.data);
   }
 
   private updateSettings() {
@@ -135,6 +144,21 @@ export class NgxVsTableComponent implements OnChanges {
         this.filters.push(null);
       }
 
+      const responsive = columns[item].responsive;
+      const responsiveCount = responsive ? responsive.length : 0;
+      const medias = [];
+
+      for (let i = 0; i < responsiveCount; i++) {
+        if (medias.indexOf(responsive[i].media) === -1) {
+          medias.push(responsive[i].media);
+        }
+      }
+
+      medias.forEach((media) => {
+        this.matchMediaChanged = true;
+        media.addEventListener('change', this.matchMediaListener);
+      });
+
       return {
         key: item,
         title: columns[item].title,
@@ -151,33 +175,104 @@ export class NgxVsTableComponent implements OnChanges {
     this.updateData(this.data);
   }
 
-  private transformData(columns, keys, data) {
-    return data.map((row) => {
-      const result: any = keys.map((item) => {
-        let value;
+  private getColumnCount(columns: IColumns, keys) {
+    const keysCount = keys.length;
+    let columnsCount = 0;
 
-        if (columns[item].component) {
-          return {
-            component: columns[item].component,
-            componentOnInit: columns[item].componentOnInit,
-            componentFactoryResolver: columns[item].componentFactoryResolver,
+    this.isResponsiveMatch = false;
+
+    for (let i = 0; i < keysCount; i++) {
+      const responsive = columns[keys[i]].responsive;
+      const responsiveCount = responsive ? responsive.length : 0;
+
+      if (!responsive || !responsive.length) {
+        columnsCount++;
+
+        continue;
+      }
+
+      for (let j = 0; j < responsiveCount; j++) {
+        if (responsive[j].media.matches) {
+
+          this.isResponsiveMatch = true;
+
+          if (responsive[j].column > columnsCount) {
+            columnsCount = responsive[j].column + 1;
+          }
+        }
+      }
+    }
+
+    return columnsCount;
+  }
+
+  private transformData(columns: IColumns, keys, data) {
+    const keysCount = keys.length;
+    const columnsCount = this.getColumnCount(columns, keys);
+
+    this.matchMediaChanged = false;
+
+    return data.map((row) => {
+      const result: {
+        source?: any;
+        length: number;
+        [index: number]: any[]
+      } = new Array(columnsCount);
+
+      let index = 0;
+
+      for (let i = 0; i < keysCount; i++) {
+        let value;
+        let cell;
+
+        if (!result[index]) {
+          result[index] = [];
+        }
+
+        if (columns[keys[i]].component) {
+          cell = {
+            component: columns[keys[i]].component,
+            componentOnInit: columns[keys[i]].componentOnInit,
+            componentFactoryResolver: columns[keys[i]].componentFactoryResolver,
             value: row
+          };
+        } else {
+          try {
+            value = columns[keys[i]].property && typeof columns[keys[i]].property === 'function'
+              ? columns[keys[i]].property(row)
+              : row[keys[i]];
+          } catch {
+            value = '';
+          }
+
+          cell = {
+            value,
+            ...columns[keys[i]].hasOwnProperty('sticky') ? {sticky: columns[keys[i]].sticky} : {}
           };
         }
 
-        try {
-          value = columns[item].property && typeof columns[item].property === 'function'
-            ? columns[item].property(row)
-            : row[item];
-        } catch {
-          value = '';
+        const responsive = columns[keys[i]].responsive;
+        const responsiveCount = responsive ? responsive.length : 0;
+
+        if (responsive && responsiveCount) {
+          for (let j = 0; j < responsiveCount; j++) {
+            if (responsive[j].media.matches) {
+              result[responsive[j].column].push({
+                ...cell,
+                label: responsive[j].label && typeof responsive[j].label === 'boolean'
+                  ? columns[keys[i]].title
+                  : responsive[j].label
+              });
+            } else {
+              result[index].push(cell);
+            }
+          }
+        } else {
+          result[index].push(cell);
         }
 
-        return {
-          value,
-          ...columns[item].hasOwnProperty('sticky') ? {sticky: columns[item].sticky} : {}
-        };
-      });
+        index++;
+      }
 
       result.source = row;
 
@@ -260,6 +355,8 @@ export class NgxVsTableComponent implements OnChanges {
 
       this.rows = this.transformData(columns, keys, data);
 
+      this.cdr.markForCheck();
+
       return;
     }
 
@@ -282,6 +379,7 @@ export class NgxVsTableComponent implements OnChanges {
       this.rows = this.transformData(columns, keys, list);
     }
 
+    this.cdr.markForCheck();
   }
 
   private sortByKey(key: string, direction: string = 'asc', func: () => void) {
@@ -323,7 +421,7 @@ export class NgxVsTableComponent implements OnChanges {
 
         if (args.hasOwnProperty(item)) {
           const property = args[item];
-          const cell = o[property.index] ? o[property.index].value : null;
+          const cell = o[property.index] ? o[property.index][0].value : null;
 
           if (cell === null) {
             continue;

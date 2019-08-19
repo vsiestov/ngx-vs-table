@@ -40,6 +40,13 @@ export interface IFilterSettings {
   componentOnInit?: (instance: any, row?: any) => void;
 }
 
+export interface IResponsiveSetting {
+  media: MediaQueryList;
+  column: number;
+  order?: number;
+  label?: string | boolean;
+}
+
 export interface IColumns {
   [propName: string]: {
     title: string | {
@@ -55,6 +62,7 @@ export interface IColumns {
     componentOnInit?: (instance: any, row?: any) => void;
     componentFactoryResolver?: ComponentFactoryResolver;
     filter?: boolean | IFilterSettings;
+    responsive?: IResponsiveSetting[]
   };
 }
 

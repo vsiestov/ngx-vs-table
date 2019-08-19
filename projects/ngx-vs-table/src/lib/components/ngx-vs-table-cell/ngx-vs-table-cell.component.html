@@ -3,11 +3,17 @@
   <ngx-vs-custom-cell
     [component]="value.component"
     [value]="value.value"
+    [label]="value.label"
     [init]="value.componentOnInit"
     [componentFactoryResolver]="value.componentFactoryResolver"
   ></ngx-vs-custom-cell>
 </ng-container>
 
 <ng-template #renderTextCell>
-  {{ value?.value }}
+  <ng-container *ngIf="value?.label; else renderValue">
+    <label class="ngx-vs-table__cell-label">{{ value?.label }}</label>
+    <span class="ngx-vs-table__cell-value">{{ value?.value }}</span>
+  </ng-container>
+
+  <ng-template #renderValue>{{ value?.value }}</ng-template>
 </ng-template>

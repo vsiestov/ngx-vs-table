@@ -18,7 +18,9 @@ import { PageSlicePipe } from './pipes/page-slice.pipe';
     PageSlicePipe
   ],
   exports: [
-    NgxVsTableComponent
+    NgxVsTableComponent,
+    PageSlicePipe,
+    NgxVsPaginationComponent
   ]
 })
 export class NgxVsTableModule {

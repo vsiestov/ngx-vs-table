@@ -157,7 +157,7 @@ export class NgxVsTableComponent implements OnChanges {
       }
 
       medias.forEach((media) => {
-        media.addEventListener('change', this.matchMediaListener);
+        media.addListener(this.matchMediaListener);
       });
 
       return {

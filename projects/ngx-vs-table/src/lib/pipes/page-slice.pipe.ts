@@ -5,11 +5,7 @@ import { slice } from 'lodash-es';
   name: 'pageSlice'
 })
 export class PageSlicePipe implements PipeTransform {
-  size: number;
-
-  constructor() {
-    this.size = 4;
-  }
+  size = 5;
 
   transform(value: any[], current: number, count: number): any {
     if (value instanceof Array) {

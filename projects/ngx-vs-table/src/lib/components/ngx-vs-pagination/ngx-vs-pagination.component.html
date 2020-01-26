@@ -1,34 +1,36 @@
-<div class="ngx-vs-pagination" *ngIf="settings.visible && count && pages.length > 1">
-  <div class="ngx-vs-pagination__item">
-    <button class="ngx-vs-pagination__button" [disabled]="active === 0" (click)="onFirst()">
-      <i class="fas fa-angle-double-left"></i>
-    </button>
-  </div>
-  <div class="ngx-vs-pagination__item">
-    <button class="ngx-vs-pagination__button" [disabled]="active === 0" (click)="onPrev()">
-      <i class="fas fa-angle-left"></i>
-    </button>
-  </div>
+<ng-container *ngIf="(settings | pages : count) as pages">
+  <div class="ngx-vs-pagination" *ngIf="settings.visible && count && pages.length > 1">
+    <div class="ngx-vs-pagination__item">
+      <button class="ngx-vs-pagination__button" [disabled]="activePage === 0" (click)="onFirst()">
+        <i class="fas fa-angle-double-left"></i>
+      </button>
+    </div>
+    <div class="ngx-vs-pagination__item">
+      <button class="ngx-vs-pagination__button" [disabled]="activePage === 0" (click)="onPrev()">
+        <i class="fas fa-angle-left"></i>
+      </button>
+    </div>
 
-  <div
-    class="ngx-vs-pagination__item"
-    *ngFor="let page of (pages | pageSlice: active : pages.length)"
-    [class.active]="page === active"
-  >
-    <button class="ngx-vs-pagination__button" (click)="onChoose(page)">
-      <span>{{ page + 1 }}</span>
-    </button>
-  </div>
+    <div
+      class="ngx-vs-pagination__item"
+      *ngFor="let page of (pages | pageSlice: activePage : pages.length)"
+      [class.active]="page === activePage"
+    >
+      <button class="ngx-vs-pagination__button" (click)="onChoose(page)">
+        <span>{{ page + 1 }}</span>
+      </button>
+    </div>
 
-  <div class="ngx-vs-pagination__item">
-    <button class="ngx-vs-pagination__button" [disabled]="active >= pages.length - 1" (click)="onNext()">
-      <i class="fas fa-angle-right"></i>
-    </button>
-  </div>
+    <div class="ngx-vs-pagination__item">
+      <button class="ngx-vs-pagination__button" [disabled]="activePage >= pages.length - 1" (click)="onNext(pages)">
+        <i class="fas fa-angle-right"></i>
+      </button>
+    </div>
 
-  <div class="ngx-vs-pagination__item">
-    <button class="ngx-vs-pagination__button" [disabled]="active >= pages.length - 1" (click)="onLast()">
-      <i class="fas fa-angle-double-right"></i>
-    </button>
+    <div class="ngx-vs-pagination__item">
+      <button class="ngx-vs-pagination__button" [disabled]="activePage >= pages.length - 1" (click)="onLast(pages)">
+        <i class="fas fa-angle-double-right"></i>
+      </button>
+    </div>
   </div>
-</div>
+</ng-container>

@@ -1,0 +1,29 @@
+@import "projects/ngx-vs-table/src/lib/scss/regular";
+$fa-font-path: '../../webfonts';
+@import "~@fortawesome/fontawesome-free/scss/regular";
+
+.checkbox {
+    cursor: pointer;
+
+    input {
+        display: none;
+
+        &:checked {
+            & + span {
+                &:before {
+                    content: fa-content($fa-var-check-square);
+                }
+            }
+        }
+    }
+
+    span {
+        &:before {
+            @extend .far;
+            content: fa-content($fa-var-square);
+            font-size: 18px;
+            color: $color-1;
+        }
+
+    }
+}

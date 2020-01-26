@@ -3,28 +3,30 @@ import {
   Component,
   ComponentFactoryResolver,
   ComponentRef,
-  Input,
+  Input, OnChanges,
   OnDestroy,
-  OnInit,
+  OnInit, Output, SimpleChanges,
   TemplateRef,
   ViewChild,
-  ViewContainerRef
+  ViewContainerRef, ViewEncapsulation
 } from '@angular/core';
 
 @Component({
   selector: 'ngx-vs-custom-cell',
   templateUrl: './ngx-vs-custom-cell.component.html',
   styleUrls: ['./ngx-vs-custom-cell.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
-export class NgxVsCustomCellComponent implements OnInit, OnDestroy {
+export class NgxVsCustomCellComponent implements OnInit, OnDestroy, OnChanges {
   @ViewChild(TemplateRef, {read: ViewContainerRef}) template: ViewContainerRef;
 
   @Input() component: any;
   @Input() value: any;
   @Input() componentFactoryResolver: ComponentFactoryResolver;
   @Input() init: (...args) => void;
-  @Input() action: (filter: any, index: number, value: any) => any;
+  @Input() update: (...args) => void;
+  @Input() destroy: (...args) => void;
   @Input() label: string;
 
   componentRef: ComponentRef<any>;
@@ -42,16 +44,43 @@ export class NgxVsCustomCellComponent implements OnInit, OnDestroy {
     const resolvedComponent = (this.componentFactoryResolver || this.cfr).resolveComponentFactory(this.component);
 
     this.componentRef = this.template.createComponent(resolvedComponent);
-    this.componentRef.instance.value = this.value;
-    this.componentRef.instance.action = this.action;
 
     if (this.init) {
       this.init(this.componentRef.instance, this.value);
     }
+
+    if (this.update) {
+      this.update(this.componentRef.instance, this.value);
+    } else {
+      this.componentRef.instance.value = this.value;
+    }
   }
 
   ngOnDestroy(): void {
-    this.componentRef.destroy();
+    if (this.componentRef) {
+      this.componentRef.destroy();
+    }
+
+    if (this.destroy) {
+      this.destroy(this.componentRef.instance, this.value);
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.value) {
+      if (this.componentRef && this.componentRef.instance) {
+        if (this.update) {
+          this.update(this.componentRef.instance, this.value);
+        } else {
+
+          this.componentRef.instance.value = this.value;
+
+          if (this.componentRef.instance.cdr) {
+            this.componentRef.instance.cdr.markForCheck();
+          }
+        }
+      }
+    }
   }
 
 }

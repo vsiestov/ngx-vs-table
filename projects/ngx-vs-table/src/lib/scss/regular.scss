@@ -1,0 +1,128 @@
+$color-5: #e8eef1;
+$color-3: #ffffff;
+$color: #444444;
+$color-1: #e83f57;
+$color-30: #e3e3e3;
+$color-31: #8f8f8f;
+$color-9: #f0cc00;
+$color-6: #eb3c54;
+$color-25: rgba(37, 34, 34, 0.15);
+$shadow-color-2: rgba(0, 0, 0, 0.05);
+$color-8: #47c269;
+$color-4: #f6f8f9;
+$color-7: #3fa0e8;
+$color-2: #bfc6ca;
+$color-21: #757575;
+$font: 'Arial';
+
+.ngx-vs-table-wrap {
+    padding: 20px;
+
+    .ngx-vs-table-wrap {
+        padding: 0;
+
+        .ngx-vs-table {
+            border-collapse: collapse;
+
+            tbody {
+                tr {
+                    box-shadow: none;
+                }
+            }
+        }
+
+        .ngx-vs-table__body-cell {
+            &:first-child {
+                border-radius: 0;
+            }
+
+            &:last-child {
+                border-radius: 0;
+            }
+        }
+    }
+}
+
+.ngx-vs-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 15px;
+
+    tbody {
+        tr {
+            box-shadow: 0 5px 9px rgba(0, 0, 0, 0.02);
+        }
+    }
+}
+
+.ngx-vs-table__head-cell {
+    height: 30px;
+    color: $color-2;
+    font-family: $font;
+    font-size: 10px;
+    font-weight: 500;
+    text-transform: uppercase;
+    text-align: left;
+    border-top: 1px solid $color-5;
+    border-bottom: 1px solid $color-5;
+    padding: 0 5px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.ngx-vs-table__sort {
+    margin: 0 0 0 5px;
+
+    &:after {
+        display: inline-block;
+        vertical-align: middle;
+        content: '';
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        border-top: 5px solid $color-2;
+    }
+
+    &.ngx-vs-table__sort-down {
+        &:after {
+            border-top: 5px solid $color-1;
+        }
+    }
+
+    &.ngx-vs-table__sort-up {
+        &:after {
+            border-top: none;
+            border-bottom: 5px solid $color-1;
+        }
+    }
+}
+
+.ngx-vs-table__cell-filter {
+
+}
+
+.ngx-vs-table__body-cell {
+    height: 50px;
+    font-family: $font;
+    padding: 0 5px;
+    background-color: $color-3;
+
+    &:first-child {
+        border-radius: 6px 0 0 6px;
+    }
+
+    &:last-child {
+        border-radius: 0 6px 6px 0;
+    }
+}
+
+.ngx-vs-table__cell-line {
+
+}
+
+.ngx-vs-table__cell-label {
+
+}
+
+.ngx-vs-table__cell-value {
+
+}

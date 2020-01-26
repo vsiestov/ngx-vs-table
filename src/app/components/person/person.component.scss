@@ -1,0 +1,29 @@
+.person {
+
+}
+
+.person__pic {
+    display: inline-block;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    margin: 0 5px 0 0;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+
+        @supports (object-fit: cover) {
+            object-fit: cover;
+            height: 100%;
+            max-width: none;
+        }
+    }
+}
+
+.person__name {
+    display: inline-block;
+    vertical-align: middle;
+    max-width: calc(100% - 35px);
+}

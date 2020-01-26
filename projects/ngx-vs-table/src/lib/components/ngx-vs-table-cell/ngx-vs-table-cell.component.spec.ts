@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxVsTableCellComponent } from './ngx-vs-table-cell.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { PropertyPipe } from '../../pipes/property.pipe';
 
 describe('NgxVsTableCellComponent', () => {
   let component: NgxVsTableCellComponent;
@@ -10,11 +11,12 @@ describe('NgxVsTableCellComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        NgxVsTableCellComponent
+        NgxVsTableCellComponent,
+        PropertyPipe
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

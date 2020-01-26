@@ -1,0 +1,15 @@
+@import "projects/ngx-vs-table/src/lib/scss/regular";
+
+.row-menu {
+    background: none;
+    border: none;
+    outline: none;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+
+    i {
+        color: $color-1;
+        font-size: 20px;
+    }
+}

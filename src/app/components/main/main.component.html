@@ -1,6 +1,17 @@
+
 <ngx-vs-table
   [settings]="settings"
   [data]="data"
+  [extendedBody]="extendedBody"
 ></ngx-vs-table>
 
-<ngx-vs-pagination [activePage]="0" [count]="300" [settings]="{visible: true, perPage: 20}"></ngx-vs-pagination>
+<ng-template #extendedBody let-row="row">
+  <tr *ngIf="row.toggle">
+    <td colspan="9">
+      <ngx-vs-table
+        [settings]="nestedSettings"
+        [data]="row.tasks"
+      ></ngx-vs-table>
+    </td>
+  </tr>
+</ng-template>

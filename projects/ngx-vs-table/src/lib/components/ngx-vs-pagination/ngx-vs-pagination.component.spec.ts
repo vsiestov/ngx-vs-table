@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NgxVsPaginationComponent } from './ngx-vs-pagination.component';
-import { SimpleChange } from '@angular/core';
+import { ChangeDetectionStrategy } from '@angular/core';
 import { PageSlicePipe } from '../../pipes/page-slice.pipe';
+import { PagesPipe } from '../../pipes/pages.pipe';
 
 describe('NgxVsPaginationComponent', () => {
   let component: NgxVsPaginationComponent;
@@ -12,20 +13,24 @@ describe('NgxVsPaginationComponent', () => {
     TestBed.configureTestingModule({
       declarations: [
         NgxVsPaginationComponent,
-        PageSlicePipe
+        PageSlicePipe,
+        PagesPipe
       ]
     })
-    .compileComponents();
+      .overrideComponent(NgxVsPaginationComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default
+        }
+      })
+      .compileComponents();
   }));
+
+  let spyOnChanged: jasmine.Spy;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(NgxVsPaginationComponent);
     component = fixture.componentInstance;
-  });
-
-  it('should create', () => {
-    fixture.detectChanges();
-    expect(component).toBeTruthy();
+    spyOnChanged = spyOn(component.changed, 'emit');
   });
 
   it('should render pagination', () => {
@@ -37,28 +42,50 @@ describe('NgxVsPaginationComponent', () => {
     }
 
     component.count = count;
+    component.activePage = 0;
     component.settings = {
       visible: true,
       perPage: 20
     };
 
-    component.ngOnChanges({
-      count: new SimpleChange(null, count, true),
-      settings: new SimpleChange(null, component.settings, true)
-    });
-
     fixture.detectChanges();
 
-    expect(component.active).toEqual(0);
-    expect(component.pages.length).toEqual(5);
+    expect(component.activePage).toEqual(0);
     expect(fixture.nativeElement.querySelectorAll('.ngx-vs-pagination__item').length).toEqual(9);
 
-    fixture.nativeElement.querySelector('.ngx-vs-pagination__item:last-child .ngx-vs-pagination__button').dispatchEvent(new Event('click'));
+    component.activePage = 4;
 
     fixture.detectChanges();
 
-    expect(component.active).toEqual(4);
+    expect(component.activePage).toEqual(4);
     expect(fixture.nativeElement.querySelector('.ngx-vs-pagination__item.active').textContent).toContain('5');
     expect(fixture.nativeElement.querySelectorAll('.ngx-vs-pagination__item').length).toEqual(9);
+  });
+
+  it('should check emitters', () => {
+    component.onFirst();
+    expect(spyOnChanged).toHaveBeenCalledWith(0);
+
+    component.onLast([1, 2, 3]);
+    expect(spyOnChanged).toHaveBeenCalledWith(2);
+
+    component.onChoose(3);
+    expect(spyOnChanged).toHaveBeenCalledWith(3);
+
+    component.activePage = 0;
+    component.onPrev();
+    expect(spyOnChanged).not.toHaveBeenCalledWith(-1);
+
+    component.activePage = 2;
+    component.onPrev();
+    expect(spyOnChanged).toHaveBeenCalledWith(1);
+
+    component.activePage = 4;
+    component.onNext([1, 2, 3, 4, 5]);
+    expect(spyOnChanged).not.toHaveBeenCalledWith(5);
+
+    component.activePage = 4;
+    component.onNext([1, 2, 3, 4, 5, 6]);
+    expect(spyOnChanged).toHaveBeenCalledWith(5);
   });
 });

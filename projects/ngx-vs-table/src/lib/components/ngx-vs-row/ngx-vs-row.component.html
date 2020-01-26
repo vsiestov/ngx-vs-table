@@ -1,0 +1,13 @@
+<tr>
+  <ng-container *ngFor="let keys of keysList">
+    <td
+      class="ngx-vs-table__body-cell"
+      ngx-vs-table-cell
+      [keys]="keys"
+      [source]="row"
+      [columns]="columns"
+    ></td>
+  </ng-container>
+</tr>
+
+<ng-container [ngTemplateOutlet]="extendedBody" [ngTemplateOutletContext]="{ row: row }"></ng-container>

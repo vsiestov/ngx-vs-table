@@ -1,11 +1,15 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
+import { IColumns, IHeadKey } from '../../interfaces/ngx-vs-table.interface';
 
 @Component({
-  selector: 'ngx-vs-table-cell',
+  selector: 'td[ngx-vs-table-cell]',
   templateUrl: './ngx-vs-table-cell.component.html',
   styleUrls: ['./ngx-vs-table-cell.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None
 })
 export class NgxVsTableCellComponent {
-  @Input() value: any;
+  @Input() columns: IColumns;
+  @Input() keys: IHeadKey[];
+  @Input() source: any;
 }

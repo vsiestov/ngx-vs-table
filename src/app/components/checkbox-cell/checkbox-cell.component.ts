@@ -1,13 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'checkbox-cell',
   templateUrl: './checkbox-cell.component.html',
-  styleUrls: ['./checkbox-cell.component.scss']
+  styleUrls: ['./checkbox-cell.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CheckboxCellComponent implements OnInit, OnDestroy {
-  @Input() value: boolean;
-  @Output() change: EventEmitter<boolean> = new EventEmitter();
+export class CheckboxCellComponent implements OnInit {
+  @Input() checked: boolean;
+  @Output() update: EventEmitter<boolean> = new EventEmitter();
 
   constructor() {
   }
@@ -15,15 +16,9 @@ export class CheckboxCellComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  ngOnDestroy(): void {
-    this.change.observers.forEach((item) => {
-      item.complete();
-    });
-  }
-
   onChange(event: Event) {
-    const target = event.target as HTMLInputElement;
+    const input = event.target as HTMLInputElement;
 
-    this.change.emit(target.checked);
+    this.update.emit(input.checked);
   }
 }

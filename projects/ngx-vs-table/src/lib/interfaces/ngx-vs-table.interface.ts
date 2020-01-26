@@ -1,14 +1,37 @@
 import { ComponentFactoryResolver, ComponentRef } from '@angular/core';
 
+export enum PaginationPosition {
+  top = 'top',
+  bottom = 'bottom',
+  both = 'both'
+}
+
+export enum FilterTypeControl {
+  custom = 'custom',
+  checkbox = 'checkbox',
+  select = 'select',
+  number = 'number',
+  text = 'text'
+}
+
+export enum SortDirection {
+  asc = 'asc',
+  desc = 'desc'
+}
+
+export interface IComponent<T, V> {
+  component?: T;
+  componentFactoryResolver?: ComponentFactoryResolver;
+  componentOnInit?: (instance: T, row?: V) => void;
+  componentOnUpdate?: (instance: T, row?: V) => void;
+  componentOnDestroy?: (instance: T, row?: V) => void;
+}
+
 export interface ITableHeadCell {
   key: string;
-  title: string | {
-    component?: any;
-    componentOnInit?: (instance: any, row?: any) => void;
-    componentFactoryResolver?: ComponentFactoryResolver;
-  };
+  title: string | IComponent<any, any>;
   sortable: boolean;
-  sortFunction: (...args) => any;
+  sortFunction?: (...args) => any;
   direction?: string;
   property?: (...args) => any;
   sticky?: boolean;
@@ -19,7 +42,7 @@ export interface ITableHeadCell {
 export interface IPagination {
   perPage: number;
   visible: boolean;
-  position?: 'top' | 'bottom' | 'both';
+  position?: PaginationPosition;
 }
 
 export interface ITitleValue {
@@ -27,17 +50,16 @@ export interface ITitleValue {
   title: string;
 }
 
-export interface IFilterSettings {
-  type: string | {
-    component?: any;
-    componentOnInit?: (instance: any, row?: any) => void;
-    componentFactoryResolver?: ComponentFactoryResolver;
-  };
+export interface IFilterSettings extends IComponent<any, any> {
+  type: FilterTypeControl | IComponent<any, any>;
   list?: ITitleValue[];
   placeholder?: string;
-  filterFunction?: (row: any, value: any) => any;
-  component?: any;
-  componentOnInit?: (instance: any, row?: any) => void;
+  filterFunction?: (row: any, value: any) => boolean;
+}
+
+export interface ITableFilter extends IFilterSettings {
+  key: string;
+  componentFactoryResolver?: ComponentFactoryResolver;
 }
 
 export interface IResponsiveSetting {
@@ -47,23 +69,18 @@ export interface IResponsiveSetting {
   label?: string | boolean;
 }
 
+export interface IColumn<T, V> extends IComponent<T, V> {
+  title: string | IComponent<T, V>;
+  sortable?: boolean;
+  sortFunction?: (...args) => any;
+  property?: (...args) => any;
+  sticky?: boolean;
+  filter?: boolean | IFilterSettings;
+  responsive?: IResponsiveSetting[];
+}
+
 export interface IColumns {
-  [propName: string]: {
-    title: string | {
-      component?: any;
-      componentOnInit?: (instance: any, row?: any) => void;
-      componentFactoryResolver?: ComponentFactoryResolver;
-    };
-    sortable?: boolean;
-    sortFunction?: (...args) => any;
-    property?: (...args) => any;
-    sticky?: boolean;
-    component?: any;
-    componentOnInit?: (instance: any, row?: any) => void;
-    componentFactoryResolver?: ComponentFactoryResolver;
-    filter?: boolean | IFilterSettings;
-    responsive?: IResponsiveSetting[]
-  };
+  [propName: string]: IColumn<any, any>;
 }
 
 export interface ITableSettings {
@@ -74,9 +91,40 @@ export interface ITableSettings {
     invisible?: boolean;
   };
   pagination?: IPagination;
-  componentTemplate?: {
-    custom: boolean
-  };
   rowClassFunction?: (row: any) => string;
   mode?: 'view' | 'none';
+}
+
+export interface ISortConfig {
+  key: string;
+  direction: string;
+  property?: (row: any) => any;
+  sortFunction?: (row: any) => any;
+}
+
+export interface IFilterItem {
+  index?: number;
+  type: FilterTypeControl | IComponent<any, any>;
+  value?: any;
+  filterFunction?: (row: any, value: any) => boolean;
+}
+
+export interface IFilterConfig {
+  [propertyName: string]: IFilterItem;
+}
+
+export interface IHeadKey {
+  value: string;
+  title: string | IComponent<any, any>;
+  filter?: boolean | IFilterSettings;
+  sortable?: boolean;
+  sortFunction?: (...args) => any;
+  sticky?: boolean;
+  property?: (...args) => any;
+}
+
+export interface IHead {
+  heads: ITableHeadCell[];
+  filters: ITableFilter[];
+  hasFilter: boolean;
 }

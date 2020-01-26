@@ -1,29 +1,48 @@
+<ng-container *ngFor="let key of keys">
+  <ng-container *ngIf="columns[key.value].component; else renderTextCell">
+    <ng-container *ngIf="keys.length > 1; else renderValue">
+      <div class="ngx-vs-table__cell-line">
+        <ng-container *ngIf="key.title; else renderValue">
+          <label class="ngx-vs-table__cell-label">{{ key.title }}</label>
+          <span class="ngx-vs-table__cell-value">
+            <ng-container [ngTemplateOutlet]="renderValue"></ng-container>
+          </span>
+        </ng-container>
+      </div>
+    </ng-container>
 
-<ng-container *ngIf="value?.component; else renderTextCell">
-  <ng-container *ngIf="value?.label; else renderValue">
-    <label class="ngx-vs-table__cell-label">{{ value?.label }}</label>
-    <span class="ngx-vs-table__cell-value">
-      <ng-container [ngTemplateOutlet]="renderValue"></ng-container>
-    </span>
+    <ng-template #renderValue>
+      <ngx-vs-custom-cell
+        [component]="columns[key.value].component"
+        [value]="source"
+        [init]="columns[key.value].componentOnInit"
+        [update]="columns[key.value].componentOnUpdate"
+        [destroy]="columns[key.value].componentOnDestroy"
+        [componentFactoryResolver]="columns[key.value].componentFactoryResolver"
+      ></ngx-vs-custom-cell>
+    </ng-template>
   </ng-container>
 
-  <ng-template #renderValue>
-    <ngx-vs-custom-cell
-      [component]="value.component"
-      [value]="value.value"
-      [label]="value.label"
-      [init]="value.componentOnInit"
-      [componentFactoryResolver]="value.componentFactoryResolver"
-    ></ngx-vs-custom-cell>
+  <ng-template #renderTextCell>
+    <ng-container *ngIf="keys.length > 1; else regularValue">
+      <div class="ngx-vs-table__cell-line">
+        <ng-container *ngIf="key.title; else regularValue">
+          <label class="ngx-vs-table__cell-label">{{ key.title }}</label>
+          <span class="ngx-vs-table__cell-value">
+            <ng-container [ngTemplateOutlet]="regularValue"></ng-container>
+          </span>
+        </ng-container>
+      </div>
+    </ng-container>
+
+    <ng-template #regularValue>
+      <ng-container *ngIf="columns[key.value].property; else renderValue">
+        {{ source | property: columns[key.value].property }}
+      </ng-container>
+
+      <ng-template #renderValue>
+        {{ source[key.value] }}
+      </ng-template>
+    </ng-template>
   </ng-template>
-
 </ng-container>
-
-<ng-template #renderTextCell>
-  <ng-container *ngIf="value?.label; else renderValue">
-    <label class="ngx-vs-table__cell-label">{{ value?.label }}</label>
-    <span class="ngx-vs-table__cell-value">{{ value?.value }}</span>
-  </ng-container>
-
-  <ng-template #renderValue>{{ value?.value }}</ng-template>
-</ng-template>

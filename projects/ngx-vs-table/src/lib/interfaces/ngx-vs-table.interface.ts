@@ -128,3 +128,7 @@ export interface IHead {
   filters: ITableFilter[];
   hasFilter: boolean;
 }
+
+export interface ICustomFilter {
+  update: (props: any) => void;
+};

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'checkbox-cell',
@@ -10,7 +10,9 @@ export class CheckboxCellComponent implements OnInit {
   @Input() checked: boolean;
   @Output() update: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() {
+  constructor(
+    public ref: ChangeDetectorRef
+  ) {
   }
 
   ngOnInit() {

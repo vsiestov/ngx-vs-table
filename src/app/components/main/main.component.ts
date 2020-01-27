@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { ITableSettings } from 'ngx-vs-table/lib/interfaces/ngx-vs-table.interface';
 import { build, fake } from 'test-data-bot';
 import { ToggleComponent } from '../toggle/toggle.component';
 import { tap } from 'rxjs/operators';
@@ -7,6 +6,12 @@ import { Subscription } from 'rxjs';
 import { RowMenuComponent } from '../row-menu/row-menu.component';
 import { PersonComponent } from '../person/person.component';
 import { CheckboxCellComponent } from '../checkbox-cell/checkbox-cell.component';
+import {
+  FilterTypeControl,
+  ITableSettings,
+  PaginationPosition
+} from '../../../../projects/ngx-vs-table/src/lib/interfaces/ngx-vs-table.interface';
+import { BetweenComponent } from '../../between/between.component';
 
 @Component({
   selector: 'main',
@@ -16,6 +21,7 @@ import { CheckboxCellComponent } from '../checkbox-cell/checkbox-cell.component'
 })
 export class MainComponent implements OnInit {
   subscriptions: Map<any, Subscription> = new Map();
+  departments: string[];
 
   settings: ITableSettings = {
     columns: {
@@ -51,25 +57,50 @@ export class MainComponent implements OnInit {
         }
       },
       id: {
-        title: 'ID'
+        title: 'ID',
+        filter: true
       },
       firstName: {
-        title: 'First name'
+        title: 'First name',
+        filter: true
       },
       lastName: {
-        title: 'Last name'
+        title: 'Last name',
+        filter: true
       },
       email: {
-        title: 'E-mail'
+        title: 'E-mail',
+        filter: true
       },
       age: {
-        title: 'Age'
+        title: 'Age',
+        filter: {
+          type: FilterTypeControl.custom,
+          component: BetweenComponent,
+          filterFunction: (row, value) => {
+            if (typeof value.from === 'number' && typeof value.to === 'number') {
+              return row.age >= value.from && row.age <= value.to;
+            }
+
+            if (typeof value.from === 'number') {
+              return row.age >= value.from;
+            }
+
+            if (typeof value.to === 'number') {
+              return row.age <= value.to;
+            }
+
+            return true;
+          }
+        }
       },
       company: {
-        title: 'Company'
+        title: 'Company',
+        filter: true
       },
       department: {
-        title: 'Department'
+        title: 'Department',
+        filter: true
       },
       actions: {
         title: 'Actions',
@@ -94,7 +125,12 @@ export class MainComponent implements OnInit {
     head: {
       sticky: true
     },
-    trackBy: 'id'
+    trackBy: 'id',
+    pagination: {
+      perPage: 20,
+      position: PaginationPosition.bottom,
+      visible: true
+    }
   };
   data: any[];
   count = 100;
@@ -102,7 +138,56 @@ export class MainComponent implements OnInit {
   nestedSettings: ITableSettings = {
     columns: {
       checkbox: {
-        title: '',
+        title: {
+          component: CheckboxCellComponent,
+          componentOnInit: (instance: CheckboxCellComponent, rows) => {
+
+            instance.checked = rows.every((item) => {
+              return item.checked;
+            });
+
+            this.subscriptions.set(instance, instance.update
+              .pipe(
+                tap((response) => {
+                  const count = rows.length;
+
+                  for (let i = 0; i < count; i++) {
+                    const index = this.data.findIndex((item) => {
+                      return item.tasks.findIndex((task) => {
+                        return task.id === rows[i].id;
+                      }) !== -1;
+                    });
+
+                    if (index !== -1) {
+                      this.data = this.data.map((item, itemIndex) => {
+                        if (index === itemIndex) {
+                          return {
+                            ...item,
+                            tasks: item.tasks.map((task) => {
+                              return {
+                                ...task,
+                                checked: response
+                              };
+                            })
+                          };
+                        }
+
+                        return item;
+                      });
+
+                      break;
+                    }
+                  }
+                })
+              )
+              .subscribe()
+            );
+          },
+          componentOnDestroy: (instance) => {
+            this.subscriptions.get(instance).unsubscribe();
+            this.subscriptions.delete(instance);
+          }
+        },
         component: CheckboxCellComponent,
         componentOnInit: (instance: CheckboxCellComponent, row) => {
           this.subscriptions.set(instance, instance.update
@@ -131,8 +216,6 @@ export class MainComponent implements OnInit {
 
                   return item;
                 });
-
-                console.log(row, value);
               })
             )
             .subscribe()
@@ -140,6 +223,7 @@ export class MainComponent implements OnInit {
         },
         componentOnUpdate: (instance: CheckboxCellComponent, row) => {
           instance.checked = row.checked;
+          instance.ref.markForCheck();
         },
         componentOnDestroy: (instance) => {
           this.subscriptions.get(instance).unsubscribe();
@@ -177,11 +261,9 @@ export class MainComponent implements OnInit {
     trackBy: 'id'
   };
 
-  constructor() {
-  }
-
   ngOnInit() {
     this.data = [];
+    this.departments = [];
 
     const taskBuilder = build('Task').fields({
       checked: false,
@@ -206,19 +288,46 @@ export class MainComponent implements OnInit {
       email: fake(f => f.internet.email()),
       age: fake(f => f.random.number(100)),
       company: fake(f => f.company.companyName()),
-      department: fake(f => f.commerce.department()),
-      tasks: [
+      department: fake(f => f.commerce.department())
+    });
+
+    for (let i = 0; i < this.count; i++) {
+      const user = userBuilder();
+
+      user.tasks = [
         taskBuilder(),
         taskBuilder(),
         taskBuilder(),
         taskBuilder(),
         taskBuilder()
-      ]
-    });
+      ];
 
-    for (let i = 0; i < this.count; i++) {
-      this.data.push(userBuilder());
+      this.data.push(user);
+
+      if (this.departments.indexOf(this.data[i].department) === -1) {
+        this.departments.push(this.data[i].department);
+      }
     }
+
+    this.settings.columns.department = {
+      ...this.settings.columns.department,
+      filter: {
+        type: FilterTypeControl.select,
+        list: this.departments.map((item) => {
+          return {
+            title: item,
+            value: item
+          };
+        })
+      }
+    };
+
+    this.settings = {
+      ...this.settings,
+      columns: {
+        ...this.settings.columns
+      }
+    };
   }
 
 }

@@ -20,7 +20,7 @@ import { IPagination } from '../../interfaces/ngx-vs-table.interface';
 export class NgxVsPaginationComponent {
   @Input() settings: IPagination;
   @Input() count = 0;
-  @Input() activePage: number;
+  @Input() activePage = 0;
   @Output() changed: EventEmitter<number> = new EventEmitter();
 
   onFirst() {

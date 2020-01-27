@@ -36,6 +36,7 @@
                       [update]="cell.title.componentOnUpdate"
                       [destroy]="cell.title.componentOnDestroy"
                       [componentFactoryResolver]="cell.title.componentFactoryResolver"
+                      [data]="data"
                     ></ngx-vs-custom-cell>
                   </ng-container>
                   <ng-template #textTitle>
@@ -66,6 +67,8 @@
                         [destroy]="filter.componentOnDestroy"
                         [componentFactoryResolver]="filter.componentFactoryResolver"
                         [value]="{ filter: filter, index: i }"
+                        [isFilter]="true"
+                        (filterChange)="onUpdateFilter(filter, i, $event)"
                       ></ngx-vs-custom-cell>
                     </div>
 

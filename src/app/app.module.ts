@@ -9,6 +9,8 @@ import { ToggleComponent } from './components/toggle/toggle.component';
 import { RowMenuComponent } from './components/row-menu/row-menu.component';
 import { PersonComponent } from './components/person/person.component';
 import { CheckboxCellComponent } from './components/checkbox-cell/checkbox-cell.component';
+import { BetweenComponent } from './between/between.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,12 +19,14 @@ import { CheckboxCellComponent } from './components/checkbox-cell/checkbox-cell.
     ToggleComponent,
     RowMenuComponent,
     PersonComponent,
-    CheckboxCellComponent
+    CheckboxCellComponent,
+    BetweenComponent
   ],
   imports: [
     BrowserModule,
     NgxVsTableModule,
-    AppRouterModule
+    AppRouterModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
@@ -30,7 +34,8 @@ import { CheckboxCellComponent } from './components/checkbox-cell/checkbox-cell.
     ToggleComponent,
     RowMenuComponent,
     PersonComponent,
-    CheckboxCellComponent
+    CheckboxCellComponent,
+    BetweenComponent
   ]
 })
 export class AppModule { }

@@ -1,0 +1,12 @@
+.ngx-vs-table__head-cell {
+    &.sticky {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    &.sticky-column {
+        position: sticky;
+        left: 0;
+    }
+}

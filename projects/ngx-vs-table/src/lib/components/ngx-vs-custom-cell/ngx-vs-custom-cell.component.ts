@@ -2,7 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   ComponentFactoryResolver,
-  ComponentRef,
+  ComponentRef, EventEmitter,
   Input, OnChanges,
   OnDestroy,
   OnInit, Output, SimpleChanges,
@@ -28,6 +28,9 @@ export class NgxVsCustomCellComponent implements OnInit, OnDestroy, OnChanges {
   @Input() update: (...args) => void;
   @Input() destroy: (...args) => void;
   @Input() label: string;
+  @Input() data: any[];
+  @Input() isFilter: boolean;
+  @Output() filterChange: EventEmitter<any> = new EventEmitter();
 
   componentRef: ComponentRef<any>;
 
@@ -46,13 +49,19 @@ export class NgxVsCustomCellComponent implements OnInit, OnDestroy, OnChanges {
     this.componentRef = this.template.createComponent(resolvedComponent);
 
     if (this.init) {
-      this.init(this.componentRef.instance, this.value);
+      this.init(this.componentRef.instance, this.value || this.data);
     }
 
     if (this.update) {
-      this.update(this.componentRef.instance, this.value);
+      this.update(this.componentRef.instance, this.value || this.data);
     } else {
       this.componentRef.instance.value = this.value;
+    }
+
+    if (this.isFilter) {
+      this.componentRef.instance.update = (data) => {
+        this.filterChange.emit(data);
+      };
     }
   }
 

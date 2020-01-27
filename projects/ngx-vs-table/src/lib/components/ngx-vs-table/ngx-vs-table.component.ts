@@ -30,7 +30,7 @@ export class NgxVsTableComponent {
   @Input() extendedBody: TemplateRef<any>;
   @Input() className: string;
   @Input() paginationTemplate: TemplateRef<any>;
-  @Input() activePage: number;
+  @Input() activePage = 0;
 
   @Output() pageChanged: EventEmitter<number> = new EventEmitter();
   @Output() toggle: EventEmitter<boolean> = new EventEmitter();

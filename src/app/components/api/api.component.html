@@ -1,0 +1,28 @@
+<ngx-vs-table
+  [settings]="settings"
+  [data]="data"
+  [extendedBody]="extendedBody"
+></ngx-vs-table>
+
+<ng-template #extendedBody let-row="row">
+  <tr *ngIf="row.toggle">
+    <td colspan="9">
+      <ngx-vs-table
+        [settings]="todoSettings"
+        [data]="todos[row.id].list"
+        [paginationTemplate]="pagination"
+        (sort)="onSort($event)"
+        (filter)="onFilter($event)"
+      ></ngx-vs-table>
+    </td>
+  </tr>
+</ng-template>
+
+<ng-template #pagination>
+  <ngx-vs-pagination
+    [activePage]="todos[selectedUser].page"
+    [settings]="todoSettings.pagination"
+    [count]="todos[selectedUser].total"
+    (changed)="onPageChange($event)"
+  ></ngx-vs-pagination>
+</ng-template>

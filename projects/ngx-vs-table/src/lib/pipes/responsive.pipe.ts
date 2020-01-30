@@ -29,6 +29,8 @@ export class ResponsivePipe implements PipeTransform {
         continue;
       }
 
+      let isResponsiveAdded = false;
+
       for (let j = 0; j < responsiveCount; j++) {
         if (responsive[j].media.matches) {
           if (!responsiveColumns[responsive[j].column]) {
@@ -48,13 +50,19 @@ export class ResponsivePipe implements PipeTransform {
           if (responsive[j].column > columnsCount) {
             columnsCount = responsive[j].column + 1;
           }
-        } else {
-          responsiveColumns[columnsCount].push({
-            ...column,
-            value: keys[i]
-          });
-          columnsCount++;
+
+          isResponsiveAdded = true;
+
+          break;
         }
+      }
+
+      if (!isResponsiveAdded) {
+        responsiveColumns[columnsCount].push({
+          ...column,
+          value: keys[i]
+        });
+        columnsCount++;
       }
     }
 

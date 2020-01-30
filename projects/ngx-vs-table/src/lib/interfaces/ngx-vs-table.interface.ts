@@ -72,7 +72,7 @@ export interface IResponsiveSetting {
 export interface IColumn<T, V> extends IComponent<T, V> {
   title: string | IComponent<T, V>;
   sortable?: boolean;
-  sortFunction?: (...args) => any;
+  sortFunction?: (...args) => boolean;
   property?: (...args) => any;
   sticky?: boolean;
   filter?: boolean | IFilterSettings;
@@ -82,14 +82,15 @@ export interface IColumn<T, V> extends IComponent<T, V> {
 export interface IColumns {
   [propName: string]: IColumn<any, any>;
 }
+export interface ITableHead {
+  sticky?: boolean;
+  invisible?: boolean;
+}
 
 export interface ITableSettings {
   columns: IColumns;
   trackBy?: string;
-  head?: {
-    sticky?: boolean;
-    invisible?: boolean;
-  };
+  head?: ITableHead;
   pagination?: IPagination;
   rowClassFunction?: (row: any) => string;
   mode?: 'view' | 'none';

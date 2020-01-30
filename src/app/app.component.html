@@ -1,17 +1,12 @@
-<nav>
-  <ul>
-    <li>
-      <a [routerLink]="['/']">Demo</a>
-    </li>
-
-    <li>
-      <a [routerLink]="['/api']">API</a>
-    </li>
-
-    <li>
-      <a href="https://github.com" target="_blank">GitHub</a>
-    </li>
-  </ul>
-</nav>
+<mat-toolbar color="primary" class="mat-elevation-z3">
+  <mat-toolbar-row>
+    <div>ngx-vs-table</div>
+    <div>
+      <a mat-button [routerLink]="['/demo']">Demo</a>
+      <a mat-button [routerLink]="['/documentation']">Documentation</a>
+      <a href="https://github.com/vsiestov/ngx-vs-table" target="_blank" mat-button>GitHub</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
 
 <router-outlet></router-outlet>

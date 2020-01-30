@@ -6,6 +6,10 @@ import { FilterTypeControl, IFilterConfig } from '../interfaces/ngx-vs-table.int
 })
 export class FilterPipe implements PipeTransform {
   transform(value: any[], filter: IFilterConfig): any {
+    if (!Array.isArray(value)) {
+      return [];
+    }
+
     return value.filter((o) => {
       let result = true;
 

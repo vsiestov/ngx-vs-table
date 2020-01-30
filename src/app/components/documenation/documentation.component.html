@@ -1,0 +1,301 @@
+<h1>Documentation</h1>
+
+<h2>Component Input(s)</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Input</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <tr>
+    <td>[data]</td>
+    <td>Array</td>
+    <td>Table data array</td>
+  </tr>
+
+  <tr>
+    <td>[settings]</td>
+    <td>ITableSettings</td>
+    <td>Table configuration object</td>
+  </tr>
+
+  <tr>
+    <td>[extendedBody]</td>
+    <td>Angular TemplateRef (ng-template)</td>
+    <td>Provided template can be used as a part of the table all rows.</td>
+  </tr>
+
+  <tr>
+    <td>[className]</td>
+    <td>string</td>
+    <td>The string that is applied as a custom class of the table</td>
+  </tr>
+
+  <tr>
+    <td>[paginationTemplate]</td>
+    <td>Angular TemplateRef (ng-template)</td>
+    <td>It is possible to add your own pagination component</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>Component Output(s)</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Output</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+
+  <tr>
+    <td>(pageChanged)</td>
+    <td>number</td>
+    <td>Triggers when a page changes</td>
+  </tr>
+
+  <tr>
+    <td>(filter)</td>
+    <td>IFilterConfig</td>
+    <td>Triggers when filtering happens</td>
+  </tr>
+
+  <tr>
+    <td>(sort)</td>
+    <td>ISortConfig</td>
+    <td>Triggers when sorting happens</td>
+  </tr>
+  </tbody>
+</table>
+
+
+<h2>ITableSettings</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr>
+    <td>columns</td>
+    <td>IColumns</td>
+    <td>It needs to describe the list of table columns and their behavior</td>
+  </tr>
+  <tr>
+    <td>trackBy</td>
+    <td>string</td>
+    <td>It provides a track by property that will be used in *ngFor expression</td>
+  </tr>
+  <tr>
+    <td>head</td>
+    <td>ITableHead</td>
+    <td>Using this property it is possible to hide the table head or stick it to the top</td>
+  </tr>
+  <tr>
+    <td>pagination</td>
+    <td>IPagination</td>
+    <td>Add and describe pagination for the table</td>
+  </tr>
+  <tr>
+    <td>rowClassFunction</td>
+    <td>Function</td>
+    <td>it is used for adding custom classes for the table rows</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>IColumns</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr>
+    <td>[name of the property]</td>
+    <td>IColumn</td>
+    <td>The Name can be any valid json property that is used inside of the array of the objects</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>IColumn</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr>
+    <td>title</td>
+    <td>string | TComponent</td>
+    <td>Title that will be added as a table cell value (th)</td>
+  </tr>
+
+  <tr>
+    <td>sortable</td>
+    <td>boolean</td>
+    <td>Set possibility to order the table by this column</td>
+  </tr>
+
+  <tr>
+    <td>sortFunction</td>
+    <td>Function</td>
+    <td>If the column has some specific sorting strategy you can specify a custom function</td>
+  </tr>
+
+  <tr>
+    <td>property</td>
+    <td>Function</td>
+    <td>To be able to render a complex object it is possible to provide a custom function that generates it</td>
+  </tr>
+
+  <tr>
+    <td>filter</td>
+    <td>boolean | IFilterSettings</td>
+    <td>Add filter for this column</td>
+  </tr>
+
+  <tr>
+    <td>responsive</td>
+    <td>IResponsiveSetting[]</td>
+    <td>It describes the list of breakpoints and how to transform the table columns under media queries conditions</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>IComponent</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>component</td>
+    <td>Angular Component</td>
+    <td>Any Angular component which is also declared in entryComponent section of its module</td>
+  </tr>
+
+  <tr>
+    <td>componentOnInit</td>
+    <td>Function</td>
+    <td>Within this function it is possible to set all necessary properties and subscribe to the component outputs</td>
+  </tr>
+
+  <tr>
+    <td>componentOnUpdate</td>
+    <td>Function</td>
+    <td>When the value of the table changes, this function will be called in case if you need to manually update the
+      component value or run the detect changes
+    </td>
+  </tr>
+
+  <tr>
+    <td>componentOnDestroy</td>
+    <td>Function</td>
+    <td>It is called when the component calls ngOnDestroy hook. Here you can clean everything related to this component,
+      unsubscribe from the events and etc.
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>IFilterSettings</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr>
+    <td>type</td>
+    <td>FilterTypeControl | IComponent</td>
+    <td>Type of the filter. You can set different type of the filters or provide your custom component</td>
+  </tr>
+
+  <tr>
+    <td>list</td>
+    <td>ITitleValue[]</td>
+    <td>The list of possible options, it can be used for <strong>FilterTypeControl.select</strong></td>
+  </tr>
+
+  <tr>
+    <td>placeholder</td>
+    <td>string</td>
+    <td>The placeholder for default filter input controls</td>
+  </tr>
+
+  <tr>
+    <td>filterFunction</td>
+    <td>Function</td>
+    <td>The custom filtering function can be used if it is necessary</td>
+  </tr>
+  </tbody>
+</table>
+
+<h2>IResponsiveSetting</h2>
+
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr>
+    <td>media</td>
+    <td>MediaQueryList</td>
+    <td>Standard matchMedia functionality</td>
+  </tr>
+
+  <tr>
+    <td>column</td>
+    <td>number</td>
+    <td>Number of the column where this column will be moved under provide media query condition</td>
+  </tr>
+
+  <tr>
+    <td>label</td>
+    <td>string | boolean</td>
+    <td>The label that describes this column. If set to <strong>true</strong> then the title of the column will be used</td>
+  </tr>
+  </tbody>
+</table>

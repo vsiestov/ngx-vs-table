@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { ICustomFilter } from '../../../projects/ngx-vs-table/src/lib/interfaces/ngx-vs-table.interface';
+import { ICustomFilter } from '../../../../projects/ngx-vs-table/src/lib/interfaces/ngx-vs-table.interface';
 
 @Component({
   selector: 'between',

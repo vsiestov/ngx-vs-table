@@ -1,3 +1,7 @@
-.font-bold {
-    font-weight: bold;
+:host {
+    mat-toolbar-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }

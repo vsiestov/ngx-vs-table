@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { build, fake } from 'test-data-bot';
 import { ToggleComponent } from '../toggle/toggle.component';
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -11,7 +10,8 @@ import {
   ITableSettings,
   PaginationPosition
 } from '../../../../projects/ngx-vs-table/src/lib/interfaces/ngx-vs-table.interface';
-import { BetweenComponent } from '../../between/between.component';
+import { BetweenComponent } from '../between/between.component';
+import { taskBuilder, userBuilder } from '../../helpers/faker.helper';
 
 @Component({
   selector: 'main',
@@ -264,32 +264,6 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.data = [];
     this.departments = [];
-
-    const taskBuilder = build('Task').fields({
-      checked: false,
-      id: fake(f => f.random.number()),
-      title: fake(f => f.lorem.words()),
-      person: {
-        name: fake(f => f.name.findName()),
-        picture: fake(f => f.image.avatar())
-      },
-      status: {
-        id: 1,
-        name: 'todo'
-      },
-      priority: 'middle'
-    });
-
-    const userBuilder = build('User').fields({
-      toggle: false,
-      id: fake(f => f.random.number()),
-      firstName: fake(f => f.name.firstName()),
-      lastName: fake(f => f.name.lastName()),
-      email: fake(f => f.internet.email()),
-      age: fake(f => f.random.number(100)),
-      company: fake(f => f.company.companyName()),
-      department: fake(f => f.commerce.department())
-    });
 
     for (let i = 0; i < this.count; i++) {
       const user = userBuilder();

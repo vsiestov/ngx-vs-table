@@ -33,8 +33,8 @@ export class NgxVsTableComponent {
   @Input() activePage = 0;
 
   @Output() pageChanged: EventEmitter<number> = new EventEmitter();
-  @Output() toggle: EventEmitter<boolean> = new EventEmitter();
-  @Output() filterTriggered: EventEmitter<any> = new EventEmitter();
+  @Output() filter: EventEmitter<IFilterConfig> = new EventEmitter();
+  @Output() sort: EventEmitter<ISortConfig> = new EventEmitter();
 
   paginationPosition: typeof PaginationPosition = PaginationPosition;
   filterTypeControl: typeof FilterTypeControl = FilterTypeControl;
@@ -140,6 +140,8 @@ export class NgxVsTableComponent {
         }
     }
 
+    this.filter.emit(this.filterConfig);
+
     this.onPageChange(0);
   }
 
@@ -176,6 +178,8 @@ export class NgxVsTableComponent {
       property: cell.property,
       sortFunction: cell.sortFunction
     };
+
+    this.sort.emit(this.sortConfig);
   }
 
   clearFilterProperty(prop: ITableFilter) {

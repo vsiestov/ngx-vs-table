@@ -1,0 +1,20 @@
+:host {
+    padding: 20px;
+    display: block;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+
+    th {
+        text-align: left;
+        height: 30px;
+    }
+
+    td,
+    th {
+        border-bottom: 1px solid #ccc;
+        height: 40px;
+    }
+}

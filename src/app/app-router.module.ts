@@ -8,6 +8,11 @@ import { DocumentationComponent } from './components/documenation/documentation.
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'demo'
+  },
+  {
     path: 'demo',
     component: DemoComponent,
     children: [

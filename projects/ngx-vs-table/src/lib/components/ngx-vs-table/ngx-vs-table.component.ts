@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {
   FilterTypeControl,
-  IFilterConfig, IFilterItem,
+  IFilterConfig,
   ISortConfig,
   ITableFilter,
   ITableHeadCell,

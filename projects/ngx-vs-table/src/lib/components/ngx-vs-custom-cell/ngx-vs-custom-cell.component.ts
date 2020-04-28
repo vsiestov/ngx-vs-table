@@ -19,7 +19,7 @@ import {
   encapsulation: ViewEncapsulation.None
 })
 export class NgxVsCustomCellComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild(TemplateRef, {read: ViewContainerRef}) template: ViewContainerRef;
+  @ViewChild(TemplateRef, { read: ViewContainerRef, static: true }) template: ViewContainerRef;
 
   @Input() component: any;
   @Input() value: any;

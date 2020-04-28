@@ -24,9 +24,9 @@ import { ResponsivePipe } from './pipes/responsive.pipe';
     NgxVsTableCellComponent,
     NgxVsCustomCellComponent,
     NgxVsPaginationComponent,
+    NgxVsRowComponent,
     PageSlicePipe,
     HeadsPipe,
-    NgxVsRowComponent,
     PropertyPipe,
     RowClassPipe,
     FilterPipe,
@@ -37,12 +37,27 @@ import { ResponsivePipe } from './pipes/responsive.pipe';
   ],
   exports: [
     NgxVsTableComponent,
-    PageSlicePipe,
     NgxVsPaginationComponent,
+    PageSlicePipe,
     HeadsPipe,
-    PaginationPipe,
     PropertyPipe,
-    PagesPipe
+    RowClassPipe,
+    FilterPipe,
+    SortPipe,
+    PaginationPipe,
+    PagesPipe,
+    ResponsivePipe
+  ],
+  providers: [
+    PageSlicePipe,
+    HeadsPipe,
+    PropertyPipe,
+    RowClassPipe,
+    FilterPipe,
+    SortPipe,
+    PaginationPipe,
+    PagesPipe,
+    ResponsivePipe
   ]
 })
 export class NgxVsTableModule {

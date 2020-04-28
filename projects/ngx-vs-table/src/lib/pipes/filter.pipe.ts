@@ -5,7 +5,7 @@ import { FilterTypeControl, IFilterConfig } from '../interfaces/ngx-vs-table.int
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-  transform(value: any[], filter: IFilterConfig): any {
+  transform(value: any[], filter: IFilterConfig): any[] {
     if (!Array.isArray(value)) {
       return [];
     }

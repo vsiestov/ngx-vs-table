@@ -66,6 +66,7 @@
                         [update]="filter.componentOnUpdate"
                         [destroy]="filter.componentOnDestroy"
                         [componentFactoryResolver]="filter.componentFactoryResolver"
+                        [data]="data"
                         [value]="{ filter: filter, index: i }"
                         [isFilter]="true"
                         (filterChange)="onUpdateFilter(filter, i, $event)"
@@ -105,7 +106,7 @@
             </thead>
           </ng-container>
 
-          <ng-container *ngFor="let row of rows | pagination: settings.pagination:activePage; trackBy: identify">
+          <ng-container *ngFor="let row of rows | pagination: settings.pagination:activePage:settings.mode; trackBy: identify">
             <tbody
               ngx-vs-row
               [row]="row"

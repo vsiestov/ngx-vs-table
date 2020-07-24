@@ -12,4 +12,12 @@ export class NgxVsTableCellComponent {
   @Input() columns: IColumns;
   @Input() keys: IHeadKey[];
   @Input() source: any;
+
+  trackByKeys(index, key: IHeadKey) {
+    if (key && key.value) {
+      return key.value;
+    }
+
+    return index;
+  }
 }

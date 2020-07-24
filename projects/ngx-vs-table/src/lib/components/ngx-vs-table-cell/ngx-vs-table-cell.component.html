@@ -1,4 +1,4 @@
-<ng-container *ngFor="let key of keys">
+<ng-container *ngFor="let key of keys; trackBy: trackByKeys">
   <ng-container *ngIf="columns[key.value].component; else renderTextCell">
     <ng-container *ngIf="keys.length > 1; else renderValue">
       <div class="ngx-vs-table__cell-line">

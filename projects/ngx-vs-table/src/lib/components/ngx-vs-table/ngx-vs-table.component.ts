@@ -48,8 +48,12 @@ export class NgxVsTableComponent {
     this.identify = this.identify.bind(this);
   }
 
-  trackByKey(headCell: ITableHeadCell) {
-    return headCell.key;
+  trackByKey(index, headCell: ITableHeadCell) {
+    if (headCell) {
+      return headCell.key;
+    }
+
+    return index;
   }
 
   onPageChange(page: number) {

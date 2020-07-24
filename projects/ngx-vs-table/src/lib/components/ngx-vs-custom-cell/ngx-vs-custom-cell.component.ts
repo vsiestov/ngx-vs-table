@@ -19,7 +19,7 @@ import {
   encapsulation: ViewEncapsulation.None
 })
 export class NgxVsCustomCellComponent implements OnInit, OnDestroy, OnChanges {
-  @ViewChild(TemplateRef, { read: ViewContainerRef, static: true }) template: ViewContainerRef;
+  @ViewChild(TemplateRef, {read: ViewContainerRef, static: true}) template: ViewContainerRef;
 
   @Input() component: any;
   @Input() value: any;
@@ -66,9 +66,11 @@ export class NgxVsCustomCellComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnDestroy(): void {
-    if (this.componentRef) {
-      this.componentRef.destroy();
+    if (!this.componentRef) {
+      return;
     }
+
+    this.componentRef.destroy();
 
     if (this.destroy) {
       this.destroy(this.componentRef.instance, this.value);
@@ -81,12 +83,11 @@ export class NgxVsCustomCellComponent implements OnInit, OnDestroy, OnChanges {
         if (this.update) {
           this.update(this.componentRef.instance, this.value);
         } else {
-
           this.componentRef.instance.value = this.value;
+        }
 
-          if (this.componentRef.instance.cdr) {
-            this.componentRef.instance.cdr.markForCheck();
-          }
+        if (this.componentRef.instance.cdr) {
+          this.componentRef.instance.cdr.markForCheck();
         }
       }
     }

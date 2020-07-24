@@ -106,9 +106,10 @@
             </thead>
           </ng-container>
 
-          <ng-container *ngFor="let row of rows | pagination: settings.pagination:activePage:settings.mode; trackBy: identify">
+          <ng-container *ngFor="let row of rows | pagination: settings.pagination:activePage:settings.mode; let i = index; trackBy: identify">
             <tbody
               ngx-vs-row
+              [index]="i"
               [row]="row"
               [columns]="settings.columns"
               [keysList]="keyList"

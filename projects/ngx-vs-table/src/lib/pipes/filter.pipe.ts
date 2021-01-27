@@ -1,13 +1,17 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { FilterTypeControl, IFilterConfig } from '../interfaces/ngx-vs-table.interface';
+import { FilterTypeControl, IFilterConfig, TTableMode } from '../interfaces/ngx-vs-table.interface';
 
 @Pipe({
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-  transform(value: any[], filter: IFilterConfig): any[] {
+  transform(value: any[], filter: IFilterConfig, mode?: TTableMode): any[] {
     if (!Array.isArray(value)) {
       return [];
+    }
+
+    if (mode === TTableMode.view) {
+      return value;
     }
 
     return value.filter((o) => {

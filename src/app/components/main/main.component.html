@@ -1,17 +1,20 @@
+<button (click)="visible = !visible">Show me the table</button>
 
-<ngx-vs-table
-  [settings]="settings"
-  [data]="data"
-  [extendedBody]="extendedBody"
-></ngx-vs-table>
+<ng-container *ngIf="visible">
+  <ngx-vs-table
+    [settings]="settings"
+    [data]="data"
+    [extendedBody]="extendedBody"
+  ></ngx-vs-table>
 
-<ng-template #extendedBody let-row="row">
-  <tr *ngIf="row.toggle">
-    <td colspan="9">
-      <ngx-vs-table
-        [settings]="nestedSettings"
-        [data]="row.tasks"
-      ></ngx-vs-table>
-    </td>
-  </tr>
-</ng-template>
+  <ng-template #extendedBody let-row="row">
+    <tr *ngIf="row.toggle">
+      <td colspan="9">
+        <ngx-vs-table
+          [settings]="nestedSettings"
+          [data]="tasks[row.id]"
+        ></ngx-vs-table>
+      </td>
+    </tr>
+  </ng-template>
+</ng-container>

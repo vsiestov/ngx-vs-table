@@ -4,7 +4,8 @@ import {
   IFilterConfig,
   ISortConfig,
   ITableSettings,
-  PaginationPosition
+  PaginationPosition,
+  TTableMode
 } from '../../../../projects/ngx-vs-table/src/lib/interfaces/ngx-vs-table.interface';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
@@ -150,6 +151,7 @@ export class ApiComponent implements OnInit {
         }
       }
     },
+    mode: TTableMode.view,
     pagination: {
       visible: true,
       position: PaginationPosition.bottom,

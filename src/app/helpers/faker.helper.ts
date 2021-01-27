@@ -2,7 +2,7 @@ import { build, fake } from 'test-data-bot';
 
 export const userBuilder = build('User').fields({
   toggle: false,
-  id: fake(f => f.random.number()),
+  id: fake(f => f.random.uuid()),
   firstName: fake(f => f.name.firstName()),
   lastName: fake(f => f.name.lastName()),
   email: fake(f => f.internet.email()),

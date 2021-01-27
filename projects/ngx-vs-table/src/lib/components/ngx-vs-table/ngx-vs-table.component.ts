@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import {
   FilterTypeControl,
-  IFilterConfig,
+  IFilterConfig, IHeadKey,
   ISortConfig,
   ITableFilter,
   ITableHeadCell,
@@ -51,6 +51,22 @@ export class NgxVsTableComponent {
   trackByKey(index, headCell: ITableHeadCell) {
     if (headCell) {
       return headCell.key;
+    }
+
+    return index;
+  }
+
+  trackByKeyListValues(index: number, keyList: IHeadKey[]) {
+    if (keyList && keyList.length) {
+      return keyList.reduce((acc, item) => acc + item.value, '');
+    }
+
+    return index;
+  }
+
+  trackByKeyValue(index: number, key: IHeadKey) {
+    if (key && key.value) {
+      return key.value;
     }
 
     return index;

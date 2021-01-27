@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ToggleComponent } from '../toggle/toggle.component';
 import { tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { RowMenuComponent } from '../row-menu/row-menu.component';
 import { PersonComponent } from '../person/person.component';
 import { CheckboxCellComponent } from '../checkbox-cell/checkbox-cell.component';
@@ -133,7 +133,13 @@ export class MainComponent implements OnInit {
     }
   };
   data: any[];
-  count = 100;
+  count = 1000;
+
+  visible: boolean;
+
+  tasks: {
+    [property: string]: any[]
+  };
 
   nestedSettings: ITableSettings = {
     columns: {
@@ -149,35 +155,12 @@ export class MainComponent implements OnInit {
             this.subscriptions.set(instance, instance.update
               .pipe(
                 tap((response) => {
-                  const count = rows.length;
-
-                  for (let i = 0; i < count; i++) {
-                    const index = this.data.findIndex((item) => {
-                      return item.tasks.findIndex((task) => {
-                        return task.id === rows[i].id;
-                      }) !== -1;
-                    });
-
-                    if (index !== -1) {
-                      this.data = this.data.map((item, itemIndex) => {
-                        if (index === itemIndex) {
-                          return {
-                            ...item,
-                            tasks: item.tasks.map((task) => {
-                              return {
-                                ...task,
-                                checked: response
-                              };
-                            })
-                          };
-                        }
-
-                        return item;
-                      });
-
-                      break;
-                    }
-                  }
+                  this.tasks[rows[0].parentId] = this.tasks[rows[0].parentId].map((item) => {
+                    return {
+                      ...item,
+                      checked: response
+                    };
+                  });
                 })
               )
               .subscribe()
@@ -193,29 +176,7 @@ export class MainComponent implements OnInit {
           this.subscriptions.set(instance, instance.update
             .pipe(
               tap((value) => {
-                const index = this.data.findIndex((item) => {
-                  return item.tasks.indexOf(row) !== -1;
-                });
-
-                this.data = this.data.map((item, dataIndex) => {
-                  if (index === dataIndex) {
-                    return {
-                      ...item,
-                      tasks: item.tasks.map((task) => {
-                        if (task === row) {
-                          return {
-                            ...task,
-                            checked: !task.checked
-                          };
-                        }
-
-                        return task;
-                      })
-                    };
-                  }
-
-                  return item;
-                });
+                row.checked = value;
               })
             )
             .subscribe()
@@ -261,19 +222,66 @@ export class MainComponent implements OnInit {
     trackBy: 'id'
   };
 
+  displayedColumns: string[] = ['id',
+    'firstName',
+    'lastName',
+    'description',
+    'email',
+    'age'];
+
+  testSettings: ITableSettings = {
+    columns: {
+      id: {
+        title: 'id'
+      },
+      firstName: {
+        title: 'name'
+      },
+      lastName: {
+        title: 'description'
+      },
+      description: {
+        title: 'status'
+      },
+      email: {
+        title: 'priority'
+      },
+      age: {
+        title: 'age'
+      }
+    }
+  };
+  testData = [];
+
   ngOnInit() {
     this.data = [];
+    this.tasks = {};
     this.departments = [];
 
     for (let i = 0; i < this.count; i++) {
       const user = userBuilder();
 
-      user.tasks = [
-        taskBuilder(),
-        taskBuilder(),
-        taskBuilder(),
-        taskBuilder(),
-        taskBuilder()
+      this.tasks[user.id] = [
+        {
+          ...taskBuilder(),
+          parentId: user.id
+        },
+        {
+          ...taskBuilder(),
+          parentId: user.id
+        },
+        {
+          ...taskBuilder(),
+          parentId: user.id
+        },
+        {
+          ...taskBuilder(),
+          parentId: user.id
+        },
+        {
+          ...taskBuilder(),
+          parentId: user.id
+        }
       ];
 
       this.data.push(user);
@@ -302,6 +310,19 @@ export class MainComponent implements OnInit {
         ...this.settings.columns
       }
     };
+
+    this.testData = new Array(10000).fill(null).map((_, i) => {
+      const u = userBuilder();
+
+      return {
+        id: i,
+        firstName: u.firstName,
+        lastName: u.lastName,
+        description: u.department,
+        email: u.email,
+        age: u.age
+      };
+    });
   }
 
 }

@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { AppRouterModule } from './app-router.module';
-import { NgxVsTableModule } from '../../dist/ngx-vs-table';
 import { ToggleComponent } from './components/toggle/toggle.component';
 import { RowMenuComponent } from './components/row-menu/row-menu.component';
 import { PersonComponent } from './components/person/person.component';
@@ -22,6 +21,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { DocumentationComponent } from './components/documenation/documentation.component';
 import { MatTableModule } from '@angular/material/table';
+import { NgxVsTableModule } from '../../projects/ngx-vs-table/src/lib/ngx-vs-table.module';
 
 @NgModule({
   declarations: [

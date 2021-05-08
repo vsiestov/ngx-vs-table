@@ -46,7 +46,7 @@
     "jasmine-spec-reporter": "~4.2.1",
     "jest": "^24.1.0",
     "jest-preset-angular": "^6.0.2",
-    "ng-packagr": "^5.7.1",
+    "ng-packagr": "^10.1.1",
     "prettier": "^1.16.4",
     "test-data-bot": "^0.8.0",
     "ts-node": "~7.0.0",

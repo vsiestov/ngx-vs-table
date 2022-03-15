@@ -25,7 +25,7 @@
     "@angular/platform-browser-dynamic": "~8.2.14",
     "@angular/router": "~8.2.14",
     "core-js": "^2.5.4",
-    "lodash-es": "^4.17.14",
+    "lodash-es": "^4.17.21",
     "rxjs": "~6.5.5",
     "tslib": "^1.11.1",
     "typescript": "3.4.5",

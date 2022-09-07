@@ -31,6 +31,7 @@ export class NgxVsTableComponent {
   @Input() className: string;
   @Input() paginationTemplate: TemplateRef<any>;
   @Input() activePage = 0;
+  @Input() emptyTemplate: TemplateRef<any>;
 
   @Output() pageChanged: EventEmitter<number> = new EventEmitter();
   @Output() filter: EventEmitter<IFilterConfig> = new EventEmitter();

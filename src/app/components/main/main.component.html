@@ -5,6 +5,7 @@
     [settings]="settings"
     [data]="data"
     [extendedBody]="extendedBody"
+    [emptyTemplate]="emptyTemplate"
   ></ngx-vs-table>
 
   <ng-template #extendedBody let-row="row">
@@ -16,5 +17,9 @@
         ></ngx-vs-table>
       </td>
     </tr>
+  </ng-template>
+
+  <ng-template #emptyTemplate>
+    No results found.
   </ng-template>
 </ng-container>

@@ -105,64 +105,77 @@
             </thead>
           </ng-container>
 
-          <tbody
-            *ngFor="
-              let row of rows | pagination: settings.pagination:activePage:settings.mode;
-              let i = index;
-              trackBy: identify
-            "
-            [ngClass]="row | rowClass: settings.rowClassFunction"
-          >
-            <tr>
-              <td *ngFor="let keys of keyList; trackBy: trackByKeyListValues" class="ngx-vs-table__body-cell">
-                <ng-container *ngFor="let key of keys; trackBy: trackByKeyValue">
-                  <ng-container *ngIf="settings.columns[key.value].component; else renderTextCell">
-                    <div *ngIf="keys.length > 1; else renderValue" class="ngx-vs-table__cell-line">
-                      <ng-container *ngIf="key.title; else renderValue">
-                        <label class="ngx-vs-table__cell-label">{{ key.title }}</label>
-                        <span class="ngx-vs-table__cell-value">
-                          <ng-container [ngTemplateOutlet]="renderValue"></ng-container>
-                        </span>
-                      </ng-container>
-                    </div>
-
-                    <ng-template #renderValue>
-                      <ngx-vs-custom-cell
-                        [component]="settings.columns[key.value].component"
-                        [value]="row"
-                        [init]="settings.columns[key.value].componentOnInit"
-                        [update]="settings.columns[key.value].componentOnUpdate"
-                        [destroy]="settings.columns[key.value].componentOnDestroy"
-                        [componentFactoryResolver]="settings.columns[key.value].componentFactoryResolver"
-                      ></ngx-vs-custom-cell>
-                    </ng-template>
-                  </ng-container>
-
-                  <ng-template #renderTextCell>
-                    <div *ngIf="keys.length > 1; else regularValue" class="ngx-vs-table__cell-line">
-                      <ng-container *ngIf="key.title; else regularValue">
-                        <label class="ngx-vs-table__cell-label">{{ key.title }}</label>
-                        <span class="ngx-vs-table__cell-value">
-                          <ng-container [ngTemplateOutlet]="regularValue"></ng-container>
-                        </span>
-                      </ng-container>
-                    </div>
-
-                    <ng-template #regularValue>
-                      <ng-container *ngIf="settings.columns[key.value].property; else renderValue">
-                        {{ row | property: settings.columns[key.value].property }}
-                      </ng-container>
+          <ng-container *ngIf="rows | pagination: settings.pagination:activePage:settings.mode as displayRows">
+            <!--/Table content -->
+            <tbody
+              *ngFor="
+                let row of displayRows;
+                let i = index;
+                trackBy: identify
+              "
+              [ngClass]="row | rowClass: settings.rowClassFunction"
+            >
+              <tr>
+                <td *ngFor="let keys of keyList; trackBy: trackByKeyListValues" class="ngx-vs-table__body-cell">
+                  <ng-container *ngFor="let key of keys; trackBy: trackByKeyValue">
+                    <ng-container *ngIf="settings.columns[key.value].component; else renderTextCell">
+                      <div *ngIf="keys.length > 1; else renderValue" class="ngx-vs-table__cell-line">
+                        <ng-container *ngIf="key.title; else renderValue">
+                          <label class="ngx-vs-table__cell-label">{{ key.title }}</label>
+                          <span class="ngx-vs-table__cell-value">
+                            <ng-container [ngTemplateOutlet]="renderValue"></ng-container>
+                          </span>
+                        </ng-container>
+                      </div>
 
                       <ng-template #renderValue>
-                        {{ row[key.value] }}
+                        <ngx-vs-custom-cell
+                          [component]="settings.columns[key.value].component"
+                          [value]="row"
+                          [init]="settings.columns[key.value].componentOnInit"
+                          [update]="settings.columns[key.value].componentOnUpdate"
+                          [destroy]="settings.columns[key.value].componentOnDestroy"
+                          [componentFactoryResolver]="settings.columns[key.value].componentFactoryResolver"
+                        ></ngx-vs-custom-cell>
+                      </ng-template>
+                    </ng-container>
+
+                    <ng-template #renderTextCell>
+                      <div *ngIf="keys.length > 1; else regularValue" class="ngx-vs-table__cell-line">
+                        <ng-container *ngIf="key.title; else regularValue">
+                          <label class="ngx-vs-table__cell-label">{{ key.title }}</label>
+                          <span class="ngx-vs-table__cell-value">
+                            <ng-container [ngTemplateOutlet]="regularValue"></ng-container>
+                          </span>
+                        </ng-container>
+                      </div>
+
+                      <ng-template #regularValue>
+                        <ng-container *ngIf="settings.columns[key.value].property; else renderValue">
+                          {{ row | property: settings.columns[key.value].property }}
+                        </ng-container>
+
+                        <ng-template #renderValue>
+                          {{ row[key.value] }}
+                        </ng-template>
                       </ng-template>
                     </ng-template>
-                  </ng-template>
-                </ng-container>
-              </td>
-            </tr>
-            <ng-container [ngTemplateOutlet]="extendedBody" [ngTemplateOutletContext]="{ row: row }"></ng-container>
-          </tbody>
+                  </ng-container>
+                </td>
+              </tr>
+              <ng-container [ngTemplateOutlet]="extendedBody" [ngTemplateOutletContext]="{ row: row }"></ng-container>
+            </tbody>
+            <!--/Table content -->
+            <!-- Table empty -->
+            <tbody *ngIf="!displayRows.length && emptyTemplate">
+              <tr class="ngx-vs-table__empty-row">
+                <td [attr.colspan]="settings.columns | count">
+                  <ng-template [ngTemplateOutlet]="emptyTemplate"></ng-template>
+                </td>
+              </tr>
+            </tbody>
+            <!--/Table empty -->
+          </ng-container>
         </ng-container>
       </table>
     </div>

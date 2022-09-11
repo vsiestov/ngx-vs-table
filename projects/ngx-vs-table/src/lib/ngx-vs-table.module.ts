@@ -9,6 +9,7 @@ import { HeadsPipe } from './pipes/heads.pipe';
 import { NgxVsRowComponent } from './components/ngx-vs-row/ngx-vs-row.component';
 import { PropertyPipe } from './pipes/property.pipe';
 import { RowClassPipe } from './pipes/row-class.pipe';
+import { CountPipe } from './pipes/count.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SortPipe } from './pipes/sort.pipe';
 import { PaginationPipe } from './pipes/pagination.pipe';
@@ -29,6 +30,7 @@ import { ResponsivePipe } from './pipes/responsive.pipe';
     HeadsPipe,
     PropertyPipe,
     RowClassPipe,
+    CountPipe,
     FilterPipe,
     SortPipe,
     PaginationPipe,
@@ -42,6 +44,7 @@ import { ResponsivePipe } from './pipes/responsive.pipe';
     HeadsPipe,
     PropertyPipe,
     RowClassPipe,
+    CountPipe,
     FilterPipe,
     SortPipe,
     PaginationPipe,
@@ -53,6 +56,7 @@ import { ResponsivePipe } from './pipes/responsive.pipe';
     HeadsPipe,
     PropertyPipe,
     RowClassPipe,
+    CountPipe,
     FilterPipe,
     SortPipe,
     PaginationPipe,

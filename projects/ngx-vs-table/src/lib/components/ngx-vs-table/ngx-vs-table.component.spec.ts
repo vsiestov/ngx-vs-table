@@ -13,6 +13,7 @@ import { PaginationPipe } from '../../pipes/pagination.pipe';
 import { RowClassPipe } from '../../pipes/row-class.pipe';
 import { FilterPipe } from '../../pipes/filter.pipe';
 import { PropertyPipe } from '../../pipes/property.pipe';
+import { CountPipe } from '../../pipes/count.pipe';
 
 describe('NgxVsTableComponent', () => {
   let component: NgxVsTableComponent;
@@ -182,7 +183,8 @@ describe('NgxVsTableComponent', () => {
         PaginationPipe,
         RowClassPipe,
         FilterPipe,
-        PropertyPipe
+        PropertyPipe,
+        CountPipe
       ],
       schemas: [NO_ERRORS_SCHEMA]
     })
@@ -371,5 +373,24 @@ describe('NgxVsTableComponent', () => {
       property: undefined,
       sortFunction: undefined
     });
+  });
+
+  it('should present empty template', () => {
+    component.settings = simpleSettings;
+    component.data = [];
+    try {
+      component.emptyTemplate = {} as any;
+      fixture.detectChanges();
+    } catch (error) {
+      // Do nothing.
+    }
+    expect(fixture.nativeElement.querySelector('.ngx-vs-table__empty-row')).toBeTruthy();
+  });
+
+  it('should not present empty template', () => {
+    component.settings = simpleSettings;
+    component.data = [];
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.ngx-vs-table__empty-row')).toBeFalsy();
   });
 });

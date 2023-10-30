@@ -49,7 +49,7 @@ export class NgxVsTableComponent {
     this.identify = this.identify.bind(this);
   }
 
-  trackByKey(index, headCell: ITableHeadCell) {
+  trackByKey(index, headCell: any) {
     if (headCell) {
       return headCell.key;
     }
@@ -87,8 +87,9 @@ export class NgxVsTableComponent {
     return index;
   }
 
-  onUpdateFilter(filter: ITableFilter, index: number, value: any) {
+  onUpdateFilter(filter: ITableFilter, index: number, event: EventTarget) {
     let result;
+    const value = (event as HTMLInputElement).value;
 
     switch (filter.type) {
       case FilterTypeControl.number:
@@ -179,7 +180,7 @@ export class NgxVsTableComponent {
       target.checked = true;
     }
 
-    this.onUpdateFilter(filter, i, target.indeterminate ? null : target.checked);
+    this.onUpdateFilter(filter, i, {value: target.indeterminate ? null : target.checked} as unknown as EventTarget);
   }
 
   onSort(cell: ITableHeadCell) {

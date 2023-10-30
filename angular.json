@@ -25,8 +25,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css", "src/styles.scss"],
-            "scripts": [],
-            "es5BrowserSupport": true
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -147,5 +146,8 @@
       }
     }
   },
-  "defaultProject": "ngx-vs-table"
+  "defaultProject": "ngx-vs-table",
+  "cli": {
+    "analytics": "ef613269-5970-43c8-a3e3-24b7cac75f09"
+  }
 }

@@ -4,6 +4,7 @@
 
 export * from './lib/components/ngx-vs-table/ngx-vs-table.component';
 export * from './lib/components/ngx-vs-row/ngx-vs-row.component';
+export * from './lib/components/ngx-vs-pagination/ngx-vs-pagination.component'
 export * from './lib/ngx-vs-table.module';
 export * from './lib/interfaces/ngx-vs-table.interface';
 export * from './lib/pipes/filter.pipe';
@@ -15,3 +16,4 @@ export * from './lib/pipes/property.pipe';
 export * from './lib/pipes/responsive.pipe';
 export * from './lib/pipes/row-class.pipe';
 export * from './lib/pipes/sort.pipe';
+export * from './lib/pipes/count.pipe';

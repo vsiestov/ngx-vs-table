@@ -77,7 +77,7 @@
                       </div>
 
                       <div *ngSwitchCase="filterTypeControl.select" class="ngx-vs-table__cell-filter">
-                        <select (change)="onUpdateFilter(filter, i, $event.target.value)">
+                        <select (change)="onUpdateFilter(filter, i, $event.target)">
                           <option value="-1">{{ filter.placeholder }}</option>
                           <option *ngFor="let item of filter.list" [value]="item.value">{{ item.title }}</option>
                         </select>
@@ -87,7 +87,7 @@
                         <input
                           type="number"
                           [placeholder]="filter.placeholder"
-                          (input)="onUpdateFilter(filter, i, $event.target.value)"
+                          (input)="onUpdateFilter(filter, i, $event.target)"
                         />
                       </div>
 
@@ -95,7 +95,7 @@
                         <input
                           type="text"
                           [placeholder]="filter.placeholder"
-                          (input)="onUpdateFilter(filter, i, $event.target.value)"
+                          (input)="onUpdateFilter(filter, i, $event.target)"
                         />
                       </div>
                     </ng-container>

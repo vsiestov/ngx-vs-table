@@ -3,8 +3,5 @@
   "dest": "../../dist/ngx-vs-table",
   "lib": {
     "entryFile": "src/public_api.ts"
-  },
-  "whitelistedNonPeerDependencies": [
-    "lodash-es"
-  ]
+  }
 }

@@ -29,7 +29,7 @@ export interface IComponent<T, V> {
 
 export interface ITableHeadCell {
   key: string;
-  title: string | IComponent<any, any>;
+  title: any;
   sortable: boolean;
   sortFunction?: (...args) => any;
   direction?: string;

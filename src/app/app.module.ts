@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
@@ -22,6 +21,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { DocumentationComponent } from './components/documenation/documentation.component';
 import { MatTableModule } from '@angular/material/table';
 import { NgxVsTableModule } from '../../projects/ngx-vs-table/src/lib/ngx-vs-table.module';
+import { RouterModule } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { NgxVsTableModule } from '../../projects/ngx-vs-table/src/lib/ngx-vs-tab
     DocumentationComponent
   ],
   imports: [
+    RouterModule,
     BrowserModule,
     NgxVsTableModule,
     AppRouterModule,
@@ -51,13 +53,6 @@ import { NgxVsTableModule } from '../../projects/ngx-vs-table/src/lib/ngx-vs-tab
     MatTableModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    ToggleComponent,
-    RowMenuComponent,
-    PersonComponent,
-    CheckboxCellComponent,
-    BetweenComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,5 @@
 {
   "compileOnSave": false,
-  "angularCompilerOptions": {
-    "strictTemplates": false,
-    "fullTemplateTypeCheck": false
-  },
   "compilerOptions": {
     "baseUrl": "./",
     "downlevelIteration": true,
@@ -25,10 +21,7 @@
     "typeRoots": [
       "node_modules/@types"
     ],
-    "lib": [
-      "es2021",
-      "dom"
-    ],
+    "lib": ["es2021", "dom", "ESNext.String"],
     "paths": {
       "ngx-vs-table": [
         "dist/ngx-vs-table"
@@ -37,5 +30,9 @@
         "dist/ngx-vs-table/*"
       ]
     }
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": false,
+    "fullTemplateTypeCheck": false
   }
 }

@@ -1,14 +1,14 @@
 {
   "name": "ngx-vs-table",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "author": "Valeriy Siestov",
   "repository": {
     "type": "git",
     "url": "https://github.com/vsiestov/ngx-vs-table"
   },
   "peerDependencies": {
-    "@angular/common": "~14.3.0",
-    "@angular/core": "~14.3.0",
+    "@angular/common": "15.2.10",
+    "@angular/core": "15.2.10",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {

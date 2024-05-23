@@ -2,8 +2,8 @@
 
 $fa-font-path: '/assets/webfonts';
 
-@import "~@fortawesome/fontawesome-free/scss/fontawesome";
-@import "~@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/solid";
 @import "projects/ngx-vs-table/src/lib/scss/regular";
 
 body {
